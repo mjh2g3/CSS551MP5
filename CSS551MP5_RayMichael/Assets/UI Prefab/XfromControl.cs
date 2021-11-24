@@ -32,17 +32,17 @@ public class XfromControl : MonoBehaviour {
     {
         Vector3 p = ReadObjectXfrom();
         mPreviousSliderValues = p;
-        X.InitSliderRange(-20, 20, p.x);
-        Y.InitSliderRange(-20, 20, p.y);
-        Z.InitSliderRange(0, 0, p.z);
+        X.InitSliderRange(-4, 4, p.x);
+        Y.InitSliderRange(-4, 4, p.y);
+        Z.InitSliderRange(0, 2, 1f);
     }
 
     void SetToScaling(bool v)
     {
         Vector3 s = ReadObjectXfrom();
         mPreviousSliderValues = s;
-        X.InitSliderRange(0.1f, 20, s.x);
-        Y.InitSliderRange(0.1f, 20, s.y);
+        X.InitSliderRange(0.1f, 10, s.x);
+        Y.InitSliderRange(0.1f, 10, s.y);
         Z.InitSliderRange(1, 1, s.z);
     }
 
