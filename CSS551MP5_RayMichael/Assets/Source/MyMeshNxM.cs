@@ -20,9 +20,11 @@ public partial class MyMeshNxM : MonoBehaviour {
         int[] tris = new int[numTriangles * 3];  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
         Vector3[] norms = new Vector3[N * M];         // MUST be the same as number of vertices
 
+        //Define dN and dM
         float dN = transform.localScale.y/(N-1);
         float dM = transform.localScale.x/(M-1);
 
+        //Define a start point (lower left corner of mesh)
         Vector3 startPoint = new Vector3(-transform.localScale.x/2, 0, -transform.localScale.y/2);
 
         for (int n = 0; n < N ; n++) {
