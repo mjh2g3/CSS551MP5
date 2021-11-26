@@ -8,8 +8,8 @@ public partial class MyMeshNxM : MonoBehaviour {
     private float meshLength = 10.0f;
     private float meshWidth = 10.0f;
 
-    private int N = 3;
-    private int M = 3;
+    private int N = 4;
+    private int M = 4;
 
 	// Use this for initialization
 	void Start () {
