@@ -3,37 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SliderWithEcho : MonoBehaviour {
-
+public class SliderWithEchoInt : MonoBehaviour
+{
     public Slider TheSlider = null;
     public Text TheEcho = null;
     public Text TheLabel = null;
 
-    public delegate void SliderCallbackDelegate(float v);      // defined a new data type
+    public delegate void SliderCallbackDelegate(int v);      // defined a new data type
     private SliderCallbackDelegate mCallBack = null;           // private instance of the data type
-
-
-	// Use this for initialization
-	void Start () {
+    
+    // Start is called before the first frame update
+    void Start()
+    {
         Debug.Assert(TheSlider != null);
         Debug.Assert(TheEcho != null);
         Debug.Assert(TheLabel != null);
+        TheSlider.wholeNumbers = true;
 
         TheSlider.onValueChanged.AddListener(SliderValueChange);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 
     public void SetSliderListener(SliderCallbackDelegate listener)
     {
         mCallBack = listener;
     }
-	
+
     // GUI element changes the object
-	void SliderValueChange(float v)
+    void SliderValueChange(float v)
     {
-        TheEcho.text = v.ToString("0.0000");
+        int intV = (int)v;
+        TheEcho.text = intV.ToString();
         // Debug.Log("SliderValueChange: " + v);
         if (mCallBack != null)
-            mCallBack(v);
+            mCallBack(intV);
     }
 
     public float GetSliderValue()
@@ -44,16 +52,15 @@ public class SliderWithEcho : MonoBehaviour {
     {
         TheLabel.text = l;
     }
-    public void SetSliderValue(float v)
+    public void SetSliderValue(int v)
     {
         TheSlider.value = v;
         SliderValueChange(v);
     }
-    public void InitSliderRange(float min, float max, float v)
+    public void InitSliderRange(int min, int max, int v)
     {
         TheSlider.minValue = min;
         TheSlider.maxValue = max;
         SetSliderValue(v);
     }
-
 }

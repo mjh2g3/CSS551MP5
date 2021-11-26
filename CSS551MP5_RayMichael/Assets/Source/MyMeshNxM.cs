@@ -86,7 +86,8 @@ public partial class MyMeshNxM : MonoBehaviour {
     {
         Mesh theMesh = GetComponent<MeshFilter>().mesh;   // get the mesh component
         theMesh.Clear();    // delete whatever is there!!
-
+        
+        
         int numTriangles = (N - 1) * (M - 1) * 2;
         int currentTriangle = 0;
 
@@ -149,6 +150,12 @@ public partial class MyMeshNxM : MonoBehaviour {
 
     public void SetResolution(List<int> res)
     {
+        for (int i = 0; i < mNormals.Length; i++)
+        {
+            Destroy(mNormals[i]);
+            Destroy(mControllers[i]);
+        }
+
         N = res[0];
         M = res[1];
         MeshInitialization();
