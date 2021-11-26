@@ -36,6 +36,42 @@ public partial class MyMeshNxM : MonoBehaviour
 
     void ComputeNormals(Vector3[] v, Vector3[] n)
     {
+        
+        int numTriangles = (N - 1) * (M - 1) * 2;
+        Vector3[] tri = new Vector3[numTriangles];
+        int cur = 0;
+        for (int j = 0; j < M - 1; ++j)
+        {
+            for (int i = 0; i < N - 1; ++i)
+            {
+                int topLeft = (j + 1) * N + i;
+                int topRight = topLeft + 1;
+                int bottomLeft = j * N + i;
+                int bottomRight = bottomLeft + 1;
+                tri[cur] = FaceNormal (v, topLeft, topRight, bottomLeft);
+                cur = cur + 1;
+                tri[cur] = FaceNormal(v, bottomLeft, topRight, bottomRight);
+                cur = cur + 1;
+            }
+        }
+
+
+        Vector3[] triNormal = new Vector3[8];
+        triNormal[0] = FaceNormal(v, 3, 4, 0);
+        triNormal[1] = FaceNormal(v, 0, 4, 1);
+
+        triNormal[2] = FaceNormal(v, 4, 5, 1);
+        triNormal[3] = FaceNormal(v, 1, 5, 2);
+
+        triNormal[4] = FaceNormal(v, 6, 7, 3);
+        triNormal[5] = FaceNormal(v, 3, 7, 4);
+
+        triNormal[6] = FaceNormal(v, 7, 8, 4);
+        triNormal[7] = FaceNormal(v, 4, 8, 5);
+
+
+
+
         /*
         // process two new triangles that can be traversed from that point
         if (currentTriangle < numTriangles && m < M - 1)
@@ -51,55 +87,6 @@ public partial class MyMeshNxM : MonoBehaviour
             currentTriangle++; // increment currentTriangle
         }
         */
-
-        /*
-        int numTriangles = (N - 1) * (M - 1) * 2;
-        Vector3[] tri = new Vector3[numTriangles];
-        Debug.Log(tri.Length);
-
-        int topLeft = M;
-        int topRight = topLeft + 1;
-        int bottomLeft = 0;
-        int bottomRight = bottomLeft + 1;
-
-        for (int i = 0; i < tri.Length; i++)
-        {
-            if (i % 2 == 0)
-            {
-                tri[i] = FaceNormal(v, topLeft, topRight, bottomLeft);
-            }
-            else
-            {
-                tri[i] = FaceNormal(v, bottomLeft, topRight, bottomRight);
-                bottomLeft = bottomLeft + 1;
-                topLeft = topLeft + 1;
-            }
-            
-            if (topRight >= M)
-            {
-
-            }
-            
-        }
-        */
-
-
-
-
-
-
-        Vector3[] triNormal = new Vector3[8];
-        triNormal[0] = FaceNormal(v, 3, 4, 0);
-        triNormal[1] = FaceNormal(v, 0, 4, 1);
-
-        triNormal[2] = FaceNormal(v, 4, 5, 1);
-        triNormal[3] = FaceNormal(v, 1, 5, 2);
-
-        triNormal[4] = FaceNormal(v, 6, 7, 3);
-        triNormal[5] = FaceNormal(v, 3, 7, 4);
-
-        triNormal[6] = FaceNormal(v, 7, 8, 4);
-        triNormal[7] = FaceNormal(v, 4, 8, 5);
 
         n[0] = (triNormal[0] + triNormal[1]).normalized;
         n[1] = (triNormal[1] + triNormal[2] + triNormal[3]).normalized;
