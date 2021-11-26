@@ -8,8 +8,8 @@ public partial class MyMeshNxM : MonoBehaviour {
     private float meshLength = 10.0f;
     private float meshWidth = 10.0f;
 
-    private int N = 3;
-    private int M = 3;
+    private int N = 4;
+    private int M = 4;
 
 	// Use this for initialization
 	void Start () {
@@ -37,10 +37,7 @@ public partial class MyMeshNxM : MonoBehaviour {
         for (int n = 0; n < N ; n++) {
             for (int m = 0; m < M ; m++) {
                 vects[n*M + m] = startPoint + new Vector3(m*dM, 0, n*dN);
-                Debug.Log("Vect[");
-                Debug.Log(n * M + m);
-                Debug.Log("]");
-                Debug.Log(vects[n * M + m]);
+                
                 // process two new triangles that can be traversed from that point
                 if (currentTriangle < numTriangles && m < M-1) {
                     tris[currentTriangle * 3] = n*M + m;
