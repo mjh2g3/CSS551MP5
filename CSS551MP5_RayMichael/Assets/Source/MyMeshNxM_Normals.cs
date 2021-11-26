@@ -36,6 +36,35 @@ public partial class MyMeshNxM : MonoBehaviour
 
     void ComputeNormals(Vector3[] v, Vector3[] n)
     {
+        /*
+        // process two new triangles that can be traversed from that point
+        if (currentTriangle < numTriangles && m < M - 1)
+        {
+            tris[currentTriangle * 3] = n * M + m;
+            tris[currentTriangle * 3 + 1] = (n + 1) * M + m;
+            tris[currentTriangle * 3 + 2] = (n + 1) * M + (m + 1);
+            currentTriangle++; // increment currentTriangle
+
+            tris[currentTriangle * 3] = n * M + m;
+            tris[currentTriangle * 3 + 1] = (n + 1) * M + (m + 1);
+            tris[currentTriangle * 3 + 2] = n * M + (m + 1);
+            currentTriangle++; // increment currentTriangle
+        }
+        */
+        int numTriangles = (N - 1) * (M - 1) * 2;
+        Vector3[] tri = new Vector3[numTriangles];
+        Debug.Log(tri.Length);
+        for (int i = 0; i < tri.Length; i++)
+        {
+            tri[i] = FaceNormal(v[);
+        }
+
+
+
+
+
+
+
         Vector3[] triNormal = new Vector3[8];
         triNormal[0] = FaceNormal(v, 3, 4, 0);
         triNormal[1] = FaceNormal(v, 0, 4, 1);

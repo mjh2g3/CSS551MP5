@@ -1,12 +1,15 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public partial class MyMeshNxM : MonoBehaviour {
 
+    private float meshLength = 10.0f;
+    private float meshWidth = 10.0f;
 
-    private int N = 2;
-    private int M = 2;
+    private int N = 3;
+    private int M = 3;
 
 	// Use this for initialization
 	void Start () {
@@ -18,19 +21,26 @@ public partial class MyMeshNxM : MonoBehaviour {
 
         Vector3[] vects = new Vector3[N * M];         // NxM Mesh needs NxM vertices
         int[] tris = new int[numTriangles * 3];  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
+       
         Vector3[] norms = new Vector3[N * M];         // MUST be the same as number of vertices
 
         //Define dN and dM
-        float dN = transform.localScale.y/(N-1);
-        float dM = transform.localScale.x/(M-1);
-
+        
+        float dN = meshLength / (N-1);
+        float dM = meshWidth / (M-1);
+        int DN = (int)transform.localScale.y / (N - 1);
+        int DM = (int)transform.localScale.x / (M - 1);
+        
         //Define a start point (lower left corner of mesh)
-        Vector3 startPoint = new Vector3(-transform.localScale.x/2, 0, -transform.localScale.y/2);
-
+        Vector3 startPoint = new Vector3(-5.0f, 0.0f, -5.0f);
+        
         for (int n = 0; n < N ; n++) {
             for (int m = 0; m < M ; m++) {
                 vects[n*M + m] = startPoint + new Vector3(m*dM, 0, n*dN);
-                
+                Debug.Log("Vect[");
+                Debug.Log(n * M + m);
+                Debug.Log("]");
+                Debug.Log(vects[n * M + m]);
                 // process two new triangles that can be traversed from that point
                 if (currentTriangle < numTriangles && m < M-1) {
                     tris[currentTriangle * 3] = n*M + m;
@@ -68,7 +78,7 @@ public partial class MyMeshNxM : MonoBehaviour {
             v[i] = mControllers[i].transform.localPosition;
         }
 
-        // ComputeNormals(v, n);
+        ComputeNormals(v, n);
 
         theMesh.vertices = v;
         theMesh.normals = n;
