@@ -9,7 +9,7 @@ public partial class MyMeshNxM : MonoBehaviour {
     private float meshWidth = 10.0f;
 
     private int N = 4;
-    private int M = 4;
+    private int M = 3;
 
 	// Use this for initialization
 	void Start () {
@@ -28,8 +28,6 @@ public partial class MyMeshNxM : MonoBehaviour {
         
         float dN = meshLength / (N-1);
         float dM = meshWidth / (M-1);
-        int DN = (int)transform.localScale.y / (N - 1);
-        int DM = (int)transform.localScale.x / (M - 1);
         
         //Define a start point (lower left corner of mesh)
         Vector3 startPoint = new Vector3(-5.0f, 0.0f, -5.0f);
