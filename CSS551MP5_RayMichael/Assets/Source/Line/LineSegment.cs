@@ -5,7 +5,9 @@ using UnityEngine;
 
     // Assume hanging on a cylinder
 public class LineSegment : MonoBehaviour {
+    //Start Position
     protected Vector3 mP1 = Vector3.zero;
+    //End Position
     protected Vector3 mP2 = Vector3.one;
 
     protected Vector3 mV;  // direction of the line, normalized
@@ -16,10 +18,10 @@ public class LineSegment : MonoBehaviour {
         ComputeLineDetails();
     }
 
-    public virtual void SetEndPoints(Vector3 p1, Vector3 P2)
+    public virtual void SetEndPoints(Vector3 p1, Vector3 p2)
     {
         mP1 = p1;
-        mP2 = P2;
+        mP2 = p2;
         ComputeLineDetails();
     }
 	
@@ -29,12 +31,24 @@ public class LineSegment : MonoBehaviour {
         s.x = s.z = w;
         transform.localScale = s;
     }
-
+    
     // Getters
-    public float GetLineLength() { return mL; }
-    public Vector3 GetLineDir() { return mV;  }
-    public Vector3 GetStartPos() {  return mP1; }
-    public Vector3 GetEndPos() {  return mP2; }
+    public float GetLineLength()
+    {
+        return mL;
+    }
+    public Vector3 GetLineDir()
+    {
+        return mV;
+    }
+    public Vector3 GetStartPos()
+    {
+        return mP1;
+    }
+    public Vector3 GetEndPos()
+    {
+        return mP2;
+    }
 
     // Return: negative when there is no valid projection
     //         Only projections within the line segment are valid
