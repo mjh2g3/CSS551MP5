@@ -36,26 +36,75 @@ public partial class MyMeshNxM : MonoBehaviour
 
     void ComputeNormals(Vector3[] v, Vector3[] n)
     {
+        //Use list where index of outer List == vertex v index (v0, v1, v2, etc.),
+        //the inner List will carry all of the indexes of the triangles that touch the vertex v
+        List<List<int>> normsLoc = new List<List<int>>();
+        for (int i = 0; i < N*M; i++)
+        {
+            normsLoc.Add(new List<int>());
+        }
         
+        //Retrieve the total count of triangles again
         int numTriangles = (N - 1) * (M - 1) * 2;
+        //create triangle vector array for storing normal vectors of each triangle
         Vector3[] tri = new Vector3[numTriangles];
+        //The cur variable will track which triangle we are working on
         int cur = 0;
+        //This of this as rowXcolumn
         for (int j = 0; j < M - 1; ++j)
         {
             for (int i = 0; i < N - 1; ++i)
             {
+                //TopLeft refers to the top left of the "square" that is a resultant of two triangles
                 int topLeft = (j + 1) * N + i;
+                //TopRight refers to the top right of the "square" that is a resultant of two triangles
                 int topRight = topLeft + 1;
+                //BottomLeft refers to the bottom left of the "square" that is a resultant of two triangles
                 int bottomLeft = j * N + i;
+                //BottomRight refers to the bottom right of the "square" that is a resultant of two triangles
                 int bottomRight = bottomLeft + 1;
+                //Add the left triangle starting at the lowest left corner of the mesh first (1/2)
                 tri[cur] = FaceNormal (v, topLeft, topRight, bottomLeft);
+                //Add the triangle to each vertex to keep track for averaging
+                normsLoc[topLeft].Add(cur);
+                normsLoc[topRight].Add(cur);
+                normsLoc[bottomLeft].Add(cur);
+                //increment to the next triangle
                 cur = cur + 1;
+                //Add the right triangle starting at the lowest left corner of the mesh first (2/2)
                 tri[cur] = FaceNormal(v, bottomLeft, topRight, bottomRight);
+                //Add the triangle to each vertex to keep track for averaging
+                normsLoc[bottomLeft].Add(cur);
+                normsLoc[topRight].Add(cur);
+                normsLoc[bottomRight].Add(cur);
+                //increment to the next triangle
                 cur = cur + 1;
             }
         }
 
+        //Computation for solving the averaging of the triangles at each vertex/normal
+        for (int i = 0; i < normsLoc.Count; i++)
+        {
+            Vector3 sumTris = new Vector3();
+            for (int j = 0; j < normsLoc[i].Count; j++)
+            {
+                int index = normsLoc[i][j];
+                if (j == 0)
+                {
+                    sumTris = tri[index];
+                }
+                else
+                {
+                    sumTris = sumTris + tri[index];
+                }
+            }
+            n[i] = sumTris.normalized;
+        }
+        
+        UpdateNormals(v, n);
 
+        /*
+        //Professor Old Implementation for triangle normals
         Vector3[] triNormal = new Vector3[8];
         triNormal[0] = FaceNormal(v, 3, 4, 0);
         triNormal[1] = FaceNormal(v, 0, 4, 1);
@@ -69,25 +118,7 @@ public partial class MyMeshNxM : MonoBehaviour
         triNormal[6] = FaceNormal(v, 7, 8, 4);
         triNormal[7] = FaceNormal(v, 4, 8, 5);
 
-
-
-
-        /*
-        // process two new triangles that can be traversed from that point
-        if (currentTriangle < numTriangles && m < M - 1)
-        {
-            tris[currentTriangle * 3] = n * M + m;
-            tris[currentTriangle * 3 + 1] = (n + 1) * M + m;
-            tris[currentTriangle * 3 + 2] = (n + 1) * M + (m + 1);
-            currentTriangle++; // increment currentTriangle
-
-            tris[currentTriangle * 3] = n * M + m;
-            tris[currentTriangle * 3 + 1] = (n + 1) * M + (m + 1);
-            tris[currentTriangle * 3 + 2] = n * M + (m + 1);
-            currentTriangle++; // increment currentTriangle
-        }
-        */
-
+        //Professors Old Implementation for the normal vector averages
         n[0] = (triNormal[0] + triNormal[1]).normalized;
         n[1] = (triNormal[1] + triNormal[2] + triNormal[3]).normalized;
         n[2] = triNormal[3].normalized;
@@ -97,6 +128,6 @@ public partial class MyMeshNxM : MonoBehaviour
         n[6] = triNormal[4].normalized;
         n[7] = (triNormal[4] + triNormal[5] + triNormal[6]).normalized;
         n[8] = (triNormal[6] + triNormal[7]).normalized;
-        UpdateNormals(v, n);
+        */
     }
 }
