@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ResolutionControl : MonoBehaviour
 {
-    public SliderWithEcho N, M;
+    public SliderWithEchoInt N, M;
     public MyMeshNxM mMesh;
 
     private float prevSliderValuesN = 0;
@@ -13,6 +13,8 @@ public class ResolutionControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Assert(N != null);
+        Debug.Assert(M != null);
         N.SetSliderListener(NValueChanged);
         M.SetSliderListener(MValueChanged);
         InitSliders();
@@ -30,26 +32,30 @@ public class ResolutionControl : MonoBehaviour
         prevSliderValuesN = res[0];
         prevSliderValuesM = res[1];
 
-        N.InitSliderRange(2.0f, 20.0f, 2.0f);
-        M.InitSliderRange(2.0f, 20.0f, 2.0f);
+        N.InitSliderRange(2, 20, 2);
+        M.InitSliderRange(2, 20, 2);
     }
 
-    void NValueChanged(float v)
+    void NValueChanged(int v)
     {
+        int intV = (int)v;
         List<int> res = ReadMeshRes();
         int n = res[0];
         prevSliderValuesN = (float)n;
-        n = (int)v;
+        n = intV;
+        //n = (int)v;
         res[0] = n;
         UISetMeshResolution(ref res);
     }
 
-    void MValueChanged(float v)
+    void MValueChanged(int v)
     {
+        int intV = (int)v;
         List<int> res = ReadMeshRes();
         int m = res[1];
         prevSliderValuesM = (float)m;
-        m = (int)v;
+        m = intV;
+        //m = (int)v;
         res[1] = m;
         UISetMeshResolution(ref res);
     }
@@ -63,7 +69,7 @@ public class ResolutionControl : MonoBehaviour
     private void UISetMeshResolution(ref List<int> r)
     {
         List<int> res = r;
-        mMesh.SetResolution(res);
+        //mMesh.SetResolution(res);
     }
 
     public void MeshSetUI()
