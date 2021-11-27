@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TheWorld : MonoBehaviour
 {
+    //The selected vertex sphere controller
+    public GameObject mSelected;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +17,10 @@ public class TheWorld : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetSelected(GameObject g)
+    {
+        mSelected = g;
     }
 }
