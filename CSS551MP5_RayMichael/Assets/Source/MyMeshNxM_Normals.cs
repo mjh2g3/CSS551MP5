@@ -8,7 +8,9 @@ public partial class MyMeshNxM : MonoBehaviour
 
     void InitNormals(Vector3[] v, Vector3[] n)
     {
+        
         mNormals = new LineSegment[v.Length];
+        
         for (int i = 0; i < v.Length; i++)
         {
             GameObject o = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
@@ -36,6 +38,7 @@ public partial class MyMeshNxM : MonoBehaviour
 
     void ComputeNormals(Vector3[] v, Vector3[] n)
     {
+        
         //Use list where index of outer List == vertex v index (v0, v1, v2, etc.),
         //the inner List will carry all of the indexes of the triangles that touch the vertex v
         List<List<int>> normsLoc = new List<List<int>>();
@@ -82,8 +85,9 @@ public partial class MyMeshNxM : MonoBehaviour
             }
         }
 
+        
         //Computation for solving the averaging of the triangles at each vertex/normal
-        for (int i = 0; i < normsLoc.Count; i++)
+        for (int i = 0; i < n.Length; i++)
         {
             Vector3 sumTris = new Vector3();
             for (int j = 0; j < normsLoc[i].Count; j++)
@@ -100,7 +104,7 @@ public partial class MyMeshNxM : MonoBehaviour
             }
             n[i] = sumTris.normalized;
         }
-        
+        //Update the normal vectors
         UpdateNormals(v, n);
 
         /*

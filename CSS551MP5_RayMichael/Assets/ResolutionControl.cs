@@ -69,7 +69,7 @@ public class ResolutionControl : MonoBehaviour
     private void UISetMeshResolution(ref List<int> r)
     {
         List<int> res = r;
-        //mMesh.SetResolution(res);
+        mMesh.SetResolution(res);
     }
 
     public void MeshSetUI()

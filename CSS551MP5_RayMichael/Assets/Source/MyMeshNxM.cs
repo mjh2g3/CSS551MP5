@@ -11,99 +11,55 @@ public partial class MyMeshNxM : MonoBehaviour {
     private int N = 2;
     private int M = 2;
 
+
+
 	// Use this for initialization
 	void Start () {
         MeshInitialization();
-        /*
-        Mesh theMesh = GetComponent<MeshFilter>().mesh;   // get the mesh component
-        theMesh.Clear();    // delete whatever is there!!
-
-        int numTriangles = (N-1) * (M-1) * 2;
-        int currentTriangle = 0;
-
-        Vector3[] vects = new Vector3[N * M];         // NxM Mesh needs NxM vertices
-        int[] tris = new int[numTriangles * 3];  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
-       
-        Vector3[] norms = new Vector3[N * M];         // MUST be the same as number of vertices
-
-        //Define dN and dM
-        
-        float dN = meshLength / (N-1);
-        float dM = meshWidth / (M-1);
-        
-        //Define a start point (lower left corner of mesh)
-        Vector3 startPoint = new Vector3(-5.0f, 0.0f, -5.0f);
-        
-        for (int n = 0; n < N ; n++) {
-            for (int m = 0; m < M ; m++) {
-                vects[n*M + m] = startPoint + new Vector3(m*dM, 0, n*dN);
-                
-                // process two new triangles that can be traversed from that point
-                if (currentTriangle < numTriangles && m < M-1) {
-                    tris[currentTriangle * 3] = n*M + m;
-                    tris[currentTriangle * 3 + 1] = (n+1)*M + m;
-                    tris[currentTriangle * 3 + 2] = (n+1)*M + (m+1);
-                    currentTriangle++; // increment currentTriangle
-
-                    tris[currentTriangle * 3] = n*M + m;
-                    tris[currentTriangle * 3 + 1] = (n+1)*M + (m+1);
-                    tris[currentTriangle * 3 + 2] = n*M + (m+1);
-                    currentTriangle++; // increment currentTriangle
-                }
-            }
-        }
-
-        for (int idx = 0; idx < norms.Length; idx++) {
-            norms[idx] = new Vector3(0, 1, 0);
-        }
-
-        theMesh.vertices = vects; //  new Vector3[3];
-        theMesh.triangles = tris; //  new int[3];
-        theMesh.normals = norms;
-
-        InitControllers(vects);
-        InitNormals(vects, norms);
-        */
     }
 
     // Update is called once per frame
     void Update () {
+        UpdateMeshNormals();
+    }
+    private void UpdateMeshNormals()
+    {
         Mesh theMesh = GetComponent<MeshFilter>().mesh;
         Vector3[] v = theMesh.vertices;
         Vector3[] n = theMesh.normals;
-        for (int i = 0; i<mControllers.Length; i++)
+        for (int i = 0; i < mControllers.Length; i++)
         {
             v[i] = mControllers[i].transform.localPosition;
         }
 
         ComputeNormals(v, n);
-
         theMesh.vertices = v;
         theMesh.normals = n;
-	}
+    }
 
     private void MeshInitialization()
     {
+        //Step 1: Obtain the mesh component and delete whatever is there
         Mesh theMesh = GetComponent<MeshFilter>().mesh;   // get the mesh component
         theMesh.Clear();    // delete whatever is there!!
         
-        
+        //Step 2: Identify the number of N, M, and Triangles
         int numTriangles = (N - 1) * (M - 1) * 2;
-        int currentTriangle = 0;
-
+        
+        //Step 3: Create arrays to store vertices in mesh, triangle vertices, and normal vectors
         Vector3[] vects = new Vector3[N * M];         // NxM Mesh needs NxM vertices
         int[] tris = new int[numTriangles * 3];  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
-
         Vector3[] norms = new Vector3[N * M];         // MUST be the same as number of vertices
 
-        //Define dN and dM
-
+        //Step 4: Define dN and dM which are the distances between each vertex in the N and M direction
         float dN = meshLength / (N - 1);
         float dM = meshWidth / (M - 1);
 
-        //Define a start point (lower left corner of mesh)
+        //Step 5: Define a start point (lower left corner of mesh) and variable to track which triangle is being created
         Vector3 startPoint = new Vector3(-5.0f, 0.0f, -5.0f);
+        int currentTriangle = 0;
 
+        //Step 6: Compute the vertices, triangle vertices, and normal vectors at each vertex
         for (int n = 0; n < N; n++)
         {
             for (int m = 0; m < M; m++)
@@ -125,16 +81,17 @@ public partial class MyMeshNxM : MonoBehaviour {
                 }
             }
         }
-
         for (int idx = 0; idx < norms.Length; idx++)
         {
             norms[idx] = new Vector3(0, 1, 0);
         }
 
+        //Step 7: Assign the vertices, triangles, and normal vectors to the mesh
         theMesh.vertices = vects; //  new Vector3[3];
         theMesh.triangles = tris; //  new int[3];
         theMesh.normals = norms;
 
+        //Step 8: Initialize the sphere controllers and normal vector line segments
         InitControllers(vects);
         InitNormals(vects, norms);
     }
@@ -150,9 +107,11 @@ public partial class MyMeshNxM : MonoBehaviour {
 
     public void SetResolution(List<int> res)
     {
+        
+        //resChange = true;
         for (int i = 0; i < mNormals.Length; i++)
         {
-            Destroy(mNormals[i]);
+            Destroy(mNormals[i].gameObject);
             Destroy(mControllers[i]);
         }
 
