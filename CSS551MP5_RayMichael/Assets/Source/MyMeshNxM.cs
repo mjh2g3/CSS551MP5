@@ -11,17 +11,23 @@ public partial class MyMeshNxM : MonoBehaviour {
     private int N = 2;
     private int M = 2;
 
+    private Vector3[] vects;         // NxM Mesh needs NxM vertices
+    private int[] tris;  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
+    private Vector3[] norms;
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         MeshInitialization();
     }
 
     // Update is called once per frame
     void Update () {
-        UpdateMeshNormals();
+        if (mControllers != null)
+        {
+            UpdateMeshNormals();
+        }
     }
+
     private void UpdateMeshNormals()
     {
         Mesh theMesh = GetComponent<MeshFilter>().mesh;
@@ -47,9 +53,9 @@ public partial class MyMeshNxM : MonoBehaviour {
         int numTriangles = (N - 1) * (M - 1) * 2;
         
         //Step 3: Create arrays to store vertices in mesh, triangle vertices, and normal vectors
-        Vector3[] vects = new Vector3[N * M];         // NxM Mesh needs NxM vertices
-        int[] tris = new int[numTriangles * 3];  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
-        Vector3[] norms = new Vector3[N * M];         // MUST be the same as number of vertices
+        vects = new Vector3[N * M];         // NxM Mesh needs NxM vertices
+        tris = new int[numTriangles * 3];  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
+        norms = new Vector3[N * M];         // MUST be the same as number of vertices
 
         //Step 4: Define dN and dM which are the distances between each vertex in the N and M direction
         float dN = meshLength / (N - 1);
@@ -92,8 +98,8 @@ public partial class MyMeshNxM : MonoBehaviour {
         theMesh.normals = norms;
 
         //Step 8: Initialize the sphere controllers and normal vector line segments
-        InitControllers(vects);
-        InitNormals(vects, norms);
+        //InitControllers(vects);
+        //InitNormals(vects, norms);
     }
 
 
@@ -107,16 +113,33 @@ public partial class MyMeshNxM : MonoBehaviour {
 
     public void SetResolution(List<int> res)
     {
-        
-        //resChange = true;
-        for (int i = 0; i < mNormals.Length; i++)
+        if (mControllers != null)
         {
-            Destroy(mNormals[i].gameObject);
-            Destroy(mControllers[i]);
+            for (int i = 0; i < mNormals.Length; i++)
+            {
+                Destroy(mNormals[i].gameObject);
+                Destroy(mControllers[i]);
+            }
         }
 
         N = res[0];
         M = res[1];
         MeshInitialization();
     }
+
+    public Vector3[] GetVects()
+    {
+        return vects;
+    }
+
+    public int[] GetTris()
+    {
+        return tris;
+    }
+
+    public Vector3[] GetNorms()
+    {
+        return norms;
+    }
+    
 }
