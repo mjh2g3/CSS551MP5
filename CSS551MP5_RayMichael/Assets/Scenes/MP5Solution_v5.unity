@@ -3143,6 +3143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSelected: {fileID: 0}
+  mMesh: {fileID: 769135587}
 --- !u!4 &1585593900
 Transform:
   m_ObjectHideFlags: 0

@@ -125,6 +125,7 @@ public partial class MyMeshNxM : MonoBehaviour {
         N = res[0];
         M = res[1];
         MeshInitialization();
+
     }
 
     public Vector3[] GetVects()

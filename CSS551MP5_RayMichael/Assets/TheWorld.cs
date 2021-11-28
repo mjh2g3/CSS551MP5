@@ -6,13 +6,15 @@ public class TheWorld : MonoBehaviour
 {
     //The selected vertex sphere controller
     public GameObject mSelected;
+    public MyMeshNxM mMesh;
+
     private Color kSelectedColor = Color.red;
     private Color mOrgObjColor = Color.white; // remember obj's original color
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Assert(mMesh != null);    
     }
 
     // Update is called once per frame
