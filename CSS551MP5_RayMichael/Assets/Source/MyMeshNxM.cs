@@ -124,6 +124,9 @@ public partial class MyMeshNxM : MonoBehaviour {
             }
         }
 
+        mControllers = null;
+        mNormals = null;
+
         N = res[0];
         M = res[1];
         MeshInitialization();
@@ -164,17 +167,12 @@ public partial class MyMeshNxM : MonoBehaviour {
             {
                 for (int i = 0; i < mNormals.Length; i++)
                 {
-                    if (mNormals[i] != null)
-                    {
-                        Destroy(mNormals[i].gameObject);
-                    }
-                    if (mControllers[i] != null)
-                    {
-                        Destroy(mControllers[i]);
-                    }
-
+                    Destroy(mNormals[i].gameObject);
+                    Destroy(mControllers[i]);
                 }
             }
+            mControllers = null;
+            mNormals = null;
         }
     }
     

@@ -11,6 +11,7 @@ public class TheWorld : MonoBehaviour
     private Color kSelectedColor = Color.red;
     private Color mOrgObjColor = Color.white; // remember obj's original color
 
+    private bool DirectManipulationOn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +40,11 @@ public class TheWorld : MonoBehaviour
 
     public void VertManipulation(bool status)
     {
-        mMesh.SwitchOnManipulation(status);
+        if (status != DirectManipulationOn)
+        {
+            DirectManipulationOn = status;
+            mMesh.SwitchOnManipulation(status);
+        }
     }
 
 }

@@ -9,11 +9,8 @@ public partial class MainController : MonoBehaviour
         //Step 1: If LeftControl Key is Down, compute the controller spheres and normal vectors on mesh
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            //Debug.Log("Holding Down the Left Control");
             //Switch On the vertex manipulation
             mModel.VertManipulation(true);
-            //Init Controllers
-            //Init Normals
         }
         //Step2: If LeftControl Key is Down AND user selected with LMB
         else if (Input.GetKey(KeyCode.LeftControl) && (Input.GetMouseButtonDown(0)))
@@ -29,6 +26,7 @@ public partial class MainController : MonoBehaviour
             {
                 if (hitInfo.transform.gameObject.name == "Sphere")
                 {
+                    Debug.Log(hitInfo.transform.gameObject.name);
                     SetSelectedController(hitInfo.transform.gameObject);
                 }
             }
