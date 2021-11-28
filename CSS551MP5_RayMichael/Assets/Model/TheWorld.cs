@@ -63,14 +63,17 @@ public class TheWorld : MonoBehaviour
         xAxis = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         xAxis.GetComponent<Renderer>().material.color = Color.red;
         //xAxis.transform.localScale = new Vector3(0.75f, 0, 0.75f);
+        xAxis.transform.name = "Manipulator";
 
         yAxis = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         yAxis.GetComponent<Renderer>().material.color = Color.green;
         //yAxis.transform.localScale = new Vector3(0.75f, 0, 0.75f);
+        yAxis.transform.name = "Manipulator";
 
         zAxis = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         zAxis.GetComponent<Renderer>().material.color = Color.blue;
         //zAxis.transform.localScale = new Vector3(0.75f, 0, 0.75f);
+        zAxis.transform.name = "Manipulator";
     }
 
     private void UpdateXAxis()

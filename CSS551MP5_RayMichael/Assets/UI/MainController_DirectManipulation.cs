@@ -11,7 +11,7 @@ public partial class MainController : MonoBehaviour
         {
             //Switch On the vertex manipulation
             mModel.VertManipulation(true);
-        }
+
             //Step2: If LeftControl Key is Down AND user selected with LMB
             if ((Input.GetMouseButtonDown(0)))
             {
@@ -29,10 +29,16 @@ public partial class MainController : MonoBehaviour
                         Debug.Log(hitInfo.transform.gameObject.name);
                         SetSelectedController(hitInfo.transform.gameObject);
                     }
+                    else if (hitInfo.transform.gameObject.name == "Manipulator")
+                    {
+                        Debug.Log(hitInfo.transform.gameObject.name);
+                        //Need to set manipulator active and turn yellow
+                        //SetSelectedController(hitInfo.transform.gameObject);
+                    }
                 }
 
             }
-
+        }
         //Step3: Obtain the nextPosition for the mouse position at mouse button hold + Alt-Left
         else if (Input.GetKey(KeyCode.LeftControl) && (Input.GetMouseButton(0)))
         {
@@ -48,7 +54,7 @@ public partial class MainController : MonoBehaviour
             {
                 //Move the sphere position incrementally
             }
-            
+
         }
         else if (Input.GetKeyUp(KeyCode.LeftControl))
         {
