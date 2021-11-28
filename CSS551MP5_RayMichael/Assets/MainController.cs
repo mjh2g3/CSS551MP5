@@ -8,6 +8,11 @@ public partial class MainController : MonoBehaviour
 
     private float mousPosX = 0f;
     private float mousPosY = 0f;
+    private float dragSpeed = 1/60f; // approximately 1 frame
+
+    private bool draggingAxis = false; // bool for dragging an axis manipulator
+
+    private Transform mSelected;
 
 
     private const float kPixelToDegree = 0.1f;

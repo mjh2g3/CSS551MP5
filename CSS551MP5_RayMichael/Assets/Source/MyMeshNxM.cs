@@ -5,8 +5,10 @@ using UnityEngine;
 public partial class MyMeshNxM : MonoBehaviour {
 
 
-    private int N = 2;
-    private int M = 2;
+    [Min(2)]
+    public int N = 2;
+    [Min(2)]
+    public int M = 2;
 
 	// Use this for initialization
 	void Start () {
