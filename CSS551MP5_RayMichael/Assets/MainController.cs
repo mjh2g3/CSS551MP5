@@ -5,6 +5,7 @@ using UnityEngine;
 public partial class MainController : MonoBehaviour
 {
     public Transform LookAt;
+    public GameObject mSelected;
 
     private float mousPosX = 0f;
     private float mousPosY = 0f;
@@ -24,6 +25,7 @@ public partial class MainController : MonoBehaviour
     void Update()
     {
         CamManipulation();
+        DirectManipulation();
     }
 
 }
