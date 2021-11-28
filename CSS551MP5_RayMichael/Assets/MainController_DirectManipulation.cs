@@ -54,16 +54,6 @@ public partial class MainController : MonoBehaviour
 
     private void SetSelectedController(GameObject s)
     {
-        if (mSelected == null)
-        {
-            mSelected = s;
-        }
-        else if (mSelected != null)
-        {
-            if (s != mSelected)
-            {
-                mSelected = s;
-            }
-        }
+        mModel.SetSelected(s);
     }
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 public partial class MainController : MonoBehaviour
 {
     public Transform LookAt;
-    public GameObject mSelected;
+    //public GameObject mSelected;
+
+    public TheWorld mModel;
 
     private float mousPosX = 0f;
     private float mousPosY = 0f;
@@ -19,6 +21,7 @@ public partial class MainController : MonoBehaviour
     void Start()
     {
         Debug.Assert(LookAt != null);
+        Debug.Assert(mModel != null);
     }
 
     // Update is called once per frame

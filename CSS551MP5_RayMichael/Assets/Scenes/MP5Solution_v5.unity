@@ -1076,6 +1076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookAt: {fileID: 1506851987}
+  mModel: {fileID: 1585593899}
 --- !u!1 &644439314
 GameObject:
   m_ObjectHideFlags: 0

@@ -98,8 +98,8 @@ public partial class MyMeshNxM : MonoBehaviour {
         theMesh.normals = norms;
 
         //Step 8: Initialize the sphere controllers and normal vector line segments
-        //InitControllers(vects);
-        //InitNormals(vects, norms);
+        InitControllers(vects);
+        InitNormals(vects, norms);
     }
 
 
