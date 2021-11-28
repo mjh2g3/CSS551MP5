@@ -11,6 +11,7 @@ public class TheWorld : MonoBehaviour
     private Color kSelectedColor = Color.red;
     private Color mOrgObjColor = Color.white; // remember obj's original color
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,4 +36,10 @@ public class TheWorld : MonoBehaviour
             mSelected.GetComponent<Renderer>().material.color = kSelectedColor;
         }
     }
+
+    public void VertManipulation(bool status)
+    {
+        mMesh.SwitchOnManipulation(status);
+    }
+
 }

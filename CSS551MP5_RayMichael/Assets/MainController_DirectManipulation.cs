@@ -10,11 +10,13 @@ public partial class MainController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl))
         {
             //Debug.Log("Holding Down the Left Control");
+            //Switch On the vertex manipulation
+            mModel.VertManipulation(true);
             //Init Controllers
             //Init Normals
         }
         //Step2: If LeftControl Key is Down AND user selected with LMB
-        if (Input.GetKey(KeyCode.LeftControl) && (Input.GetMouseButtonDown(0)))
+        else if (Input.GetKey(KeyCode.LeftControl) && (Input.GetMouseButtonDown(0)))
         {
             //Debug.Log("Holding Down the Left Control AND MouseButton is clicked");
             //if sphere selected, set mSelected
@@ -49,6 +51,11 @@ public partial class MainController : MonoBehaviour
                 //Move the sphere position incrementally
             }
             
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            mModel.VertManipulation(false);
+
         }
     }
 

@@ -15,6 +15,8 @@ public partial class MyMeshNxM : MonoBehaviour {
     private int[] tris;  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
     private Vector3[] norms;
 
+    private bool ManipulationOn = false;
+
     // Use this for initialization
     void Start () {
         MeshInitialization();
@@ -22,7 +24,7 @@ public partial class MyMeshNxM : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (mControllers != null)
+        if ((mControllers != null) && (ManipulationOn))
         {
             UpdateMeshNormals();
         }
@@ -98,8 +100,8 @@ public partial class MyMeshNxM : MonoBehaviour {
         theMesh.normals = norms;
 
         //Step 8: Initialize the sphere controllers and normal vector line segments
-        InitControllers(vects);
-        InitNormals(vects, norms);
+        //InitControllers(vects);
+        //InitNormals(vects, norms);
     }
 
 
@@ -125,7 +127,12 @@ public partial class MyMeshNxM : MonoBehaviour {
         N = res[0];
         M = res[1];
         MeshInitialization();
-
+        if (ManipulationOn)
+        {
+            //Step 8: Initialize the sphere controllers and normal vector line segments
+            InitControllers(vects);
+            InitNormals(vects, norms);
+        }
     }
 
     public Vector3[] GetVects()
@@ -141,6 +148,34 @@ public partial class MyMeshNxM : MonoBehaviour {
     public Vector3[] GetNorms()
     {
         return norms;
+    }
+
+    public void SwitchOnManipulation(bool status)
+    {
+        ManipulationOn = status;
+        if (status)
+        {
+            InitControllers(vects);
+            InitNormals(vects, norms);
+        }
+        else
+        {
+            if (mControllers != null)
+            {
+                for (int i = 0; i < mNormals.Length; i++)
+                {
+                    if (mNormals[i] != null)
+                    {
+                        Destroy(mNormals[i].gameObject);
+                    }
+                    if (mControllers[i] != null)
+                    {
+                        Destroy(mControllers[i]);
+                    }
+
+                }
+            }
+        }
     }
     
 }
