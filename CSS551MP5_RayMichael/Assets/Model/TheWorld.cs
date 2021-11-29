@@ -53,6 +53,11 @@ public class TheWorld : MonoBehaviour
         }
     }
 
+    public void ResetSelected() {
+        if (mSelected != null)
+            mSelected.GetComponent<Renderer>().material.color = mOrgObjColor;
+    }
+
     public void SelectAxis(GameObject axis)
     {
         if (selectedAxis != null) {
@@ -112,6 +117,12 @@ public class TheWorld : MonoBehaviour
         zAxis.transform.parent = axisGroup.transform;
     }
 
+    public bool ManipulatorAxesOn() {
+        if (axisGroup != null) {
+            return true;
+        } else return false;
+    }
+
     private void UpdateXAxis()
     {
         //Define the start and end point of the axis beam
@@ -155,8 +166,10 @@ public class TheWorld : MonoBehaviour
         zAxis.transform.localPosition = mSelected.transform.localPosition + 0.5f * v;
     }
 
-    private void DestroyManipulatorAxes()
+    public void DestroyManipulatorAxes()
     {
         Destroy(axisGroup);
     }
+
+
 }
