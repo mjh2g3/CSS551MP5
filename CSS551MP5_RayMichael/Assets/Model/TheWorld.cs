@@ -169,6 +169,12 @@ public class TheWorld : MonoBehaviour
     public void DestroyManipulatorAxes()
     {
         Destroy(axisGroup);
+        /*
+        foreach (Transform child in axisGroup.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        */
     }
 
 
