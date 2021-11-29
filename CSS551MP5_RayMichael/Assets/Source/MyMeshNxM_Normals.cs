@@ -19,6 +19,9 @@ public partial class MyMeshNxM : MonoBehaviour
             mNormals[i].transform.SetParent(this.transform);
         }
         UpdateNormals(v, n);
+        
+        Debug.Log("v: " + v.Length);
+        Debug.Log("n: " + n.Length);
     }
 
     void UpdateNormals(Vector3[] v, Vector3[] n)

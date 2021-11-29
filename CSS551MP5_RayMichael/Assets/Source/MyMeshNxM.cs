@@ -9,9 +9,10 @@ public partial class MyMeshNxM : MonoBehaviour {
     private float meshWidth = 10.0f;
 
     private int N = 2;
+
     private int M = 2;
 
-    private Vector3[] vects;         // NxM Mesh needs NxM vertices
+    private Vector3[] verts;         // NxM Mesh needs NxM vertices
     private int[] tris;  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
     private Vector3[] norms;
 
@@ -55,9 +56,14 @@ public partial class MyMeshNxM : MonoBehaviour {
         int numTriangles = (N - 1) * (M - 1) * 2;
         
         //Step 3: Create arrays to store vertices in mesh, triangle vertices, and normal vectors
-        vects = new Vector3[N * M];         // NxM Mesh needs NxM vertices
+        verts = new Vector3[N * M];         // NxM Mesh needs NxM vertices
         tris = new int[numTriangles * 3];  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
         norms = new Vector3[N * M];         // MUST be the same as number of vertices
+
+        Debug.Log("verts: " + verts.Length);
+        Debug.Log("norms: " + norms.Length);
+        Debug.Log("break");
+        // Debug.Break();
 
         //Step 4: Define dN and dM which are the distances between each vertex in the N and M direction
         float dN = meshLength / (N - 1);
@@ -72,7 +78,7 @@ public partial class MyMeshNxM : MonoBehaviour {
         {
             for (int m = 0; m < M; m++)
             {
-                vects[n * M + m] = startPoint + new Vector3(m * dM, 0, n * dN);
+                verts[n * M + m] = startPoint + new Vector3(m * dM, 0, n * dN);
 
                 // process two new triangles that can be traversed from that point
                 if (currentTriangle < numTriangles && m < M - 1)
@@ -95,7 +101,7 @@ public partial class MyMeshNxM : MonoBehaviour {
         }
 
         //Step 7: Assign the vertices, triangles, and normal vectors to the mesh
-        theMesh.vertices = vects; //  new Vector3[3];
+        theMesh.vertices = verts; //  new Vector3[3];
         theMesh.triangles = tris; //  new int[3];
         theMesh.normals = norms;
 
@@ -133,14 +139,14 @@ public partial class MyMeshNxM : MonoBehaviour {
         if (ManipulationOn)
         {
             //Step 8: Initialize the sphere controllers and normal vector line segments
-            InitControllers(vects);
-            InitNormals(vects, norms);
+            InitControllers(verts);
+            InitNormals(verts, norms);
         }
     }
 
     public Vector3[] GetVects()
     {
-        return vects;
+        return verts;
     }
 
     public int[] GetTris()
@@ -158,8 +164,8 @@ public partial class MyMeshNxM : MonoBehaviour {
         ManipulationOn = status;
         if (status)
         {
-            InitControllers(vects);
-            InitNormals(vects, norms);
+            InitControllers(verts);
+            InitNormals(verts, norms);
         }
         else
         {

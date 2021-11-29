@@ -9,9 +9,12 @@ public partial class MainController : MonoBehaviour
         //Step 1: If LeftControl Key is Down, compute the controller spheres and normal vectors on mesh
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            Debug.Log("left control pressed");
+            // Debug.Log("left control pressed");
             //Switch On the vertex manipulation
-            mModel.VertManipulation(true);
+            
+            if (!ManipulatorAxesOn()) {
+                mModel.VertManipulation(true);
+            }
 
             //Step2: If LeftControl Key is Down AND user selected with LMB
             if ((Input.GetMouseButtonDown(0)))
@@ -36,6 +39,9 @@ public partial class MainController : MonoBehaviour
                         //Need to set manipulator active and turn yellow
                         SelectAxis(hitInfo.transform.gameObject);
                     }
+                } else {
+                    ResetSelectedObj();
+                    DestroyAxes();
                 }
             }
 
@@ -70,23 +76,21 @@ public partial class MainController : MonoBehaviour
                 }
             }
         }
-        
-        // else if (Input.GetKey(KeyCode.LeftControl) && (Input.GetMouseButton(0)))
-        // {
-            
-
-        // }
-        else if (Input.GetKeyUp(KeyCode.LeftControl))
+        else if (Input.GetKeyUp(KeyCode.LeftControl) && !ManipulatorAxesOn())
         {
             mModel.VertManipulation(false);
-
         }
     }
 
+    // Set Selected 
     private void SetSelectedObj(GameObject s)
     {
         mModel.SetSelected(s);
         mSelected = s.transform;
+    }
+
+    private void ResetSelectedObj() {
+        mModel.ResetSelected();
     }
 
     private void SelectAxis(GameObject axis) {
@@ -101,5 +105,13 @@ public partial class MainController : MonoBehaviour
 
     private string GetSelectedAxis() {
         return mModel.GetSelectedAxis();
+    }
+
+    private void DestroyAxes() {
+        mModel.DestroyManipulatorAxes();
+    }
+
+    private bool ManipulatorAxesOn() {
+        return mModel.ManipulatorAxesOn();
     }
 }
