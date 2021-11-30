@@ -38,7 +38,7 @@ public class CylinderMesh : MyMeshNxM
         float dM = meshWidth / (M - 1);
 
         //Step 5: Define a start point (lower left corner of mesh) and variable to track which triangle is being created
-        Vector3 startPoint = new Vector3(-5.0f, 0.0f, -5.0f);
+        Vector3 startPoint = new Vector3(-5.0f, -5.0f, 0.0f);
         int currentTriangle = 0;
 
         //Step 6: Compute the vertices, triangle vertices, and normal vectors at each vertex
@@ -46,7 +46,7 @@ public class CylinderMesh : MyMeshNxM
         {
             for (int m = 0; m < M; m++)
             {
-                verts[n * M + m] = startPoint + new Vector3(m * dM, 0, n * dN);
+                verts[n * M + m] = startPoint + new Vector3(m * dM, n * dN, 0);
 
                 // process two new triangles that can be traversed from that point
                 if (currentTriangle < numTriangles && m < M - 1)
@@ -76,5 +76,24 @@ public class CylinderMesh : MyMeshNxM
         //Step 8: Initialize the sphere controllers and normal vector line segments
         //InitControllers(vects);
         //InitNormals(vects, norms);
+    }
+
+    //Updated the color of the manipulation spheres; only the edge spheres are to be white and manipulatable
+    public override void InitControllers(Vector3[] v)
+    {
+        mControllers = new GameObject[v.Length];
+        for (int i = 0; i < v.Length; i++)
+        {
+            mControllers[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            mControllers[i].transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+            mControllers[i].transform.localPosition = v[i];
+            mControllers[i].transform.parent = this.transform;
+            if (i % M != 0)
+            {
+                Renderer rend = mControllers[i].GetComponent<Renderer>();
+                rend.material.color = Color.black;
+            }
+        }
     }
 }
