@@ -4,9 +4,10 @@ using UnityEngine;
 
 public partial class MyMeshNxM : MonoBehaviour {
 
-    GameObject[] mControllers;
+    //Variable changed to protected to provide access to child subclass CylinderMesh
+    protected GameObject[] mControllers;
 
-    void InitControllers(Vector3[] v)
+    public virtual void InitControllers(Vector3[] v)
     {
         mControllers = new GameObject[v.Length];
         for (int i =0; i<v.Length; i++ )

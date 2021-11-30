@@ -5,16 +5,15 @@ using UnityEngine;
 
 public partial class MyMeshNxM : MonoBehaviour {
 
-    private float meshLength = 10.0f;
-    private float meshWidth = 10.0f;
+    protected float meshLength = 10.0f;
+    protected float meshWidth = 10.0f;
 
-    private int N = 2;
+    protected int N = 2;
+    protected int M = 2;
 
-    private int M = 2;
-
-    private Vector3[] verts;         // NxM Mesh needs NxM vertices
-    private int[] tris;  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
-    private Vector3[] norms;
+    protected Vector3[] verts;         // NxM Mesh needs NxM vertices
+    protected int[] tris;  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
+    protected Vector3[] norms;
 
     private bool ManipulationOn = false;
 
@@ -46,7 +45,7 @@ public partial class MyMeshNxM : MonoBehaviour {
         theMesh.normals = n;
     }
 
-    private void MeshInitialization()
+    public virtual void MeshInitialization()
     {
         //Step 1: Obtain the mesh component and delete whatever is there
         Mesh theMesh = GetComponent<MeshFilter>().mesh;   // get the mesh component
@@ -59,11 +58,6 @@ public partial class MyMeshNxM : MonoBehaviour {
         verts = new Vector3[N * M];         // NxM Mesh needs NxM vertices
         tris = new int[numTriangles * 3];  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
         norms = new Vector3[N * M];         // MUST be the same as number of vertices
-
-        Debug.Log("verts: " + verts.Length);
-        Debug.Log("norms: " + norms.Length);
-        Debug.Log("break");
-        // Debug.Break();
 
         //Step 4: Define dN and dM which are the distances between each vertex in the N and M direction
         float dN = meshLength / (N - 1);
