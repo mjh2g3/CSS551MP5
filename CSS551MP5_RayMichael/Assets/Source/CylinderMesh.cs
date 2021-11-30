@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CylinderMesh : MyMeshNxM
 {
+    private double rotationDegrees = 10.0;
+    private float radius = 5.0f;
+    
     /*
     // Start is called before the first frame update
     void Start()
@@ -17,6 +21,12 @@ public class CylinderMesh : MyMeshNxM
         
     }
     */
+
+    private double ConvertDegreesToRadians(double degrees)
+    {
+        double rad = (Math.PI / 180.0) * degrees;
+        return rad;
+    }
 
     //MeshInitialization Override to adapt planar to cylinder layout
     public override void MeshInitialization()
@@ -38,7 +48,8 @@ public class CylinderMesh : MyMeshNxM
         float dM = meshWidth / (M - 1);
 
         //Step 5: Define a start point (lower left corner of mesh) and variable to track which triangle is being created
-        Vector3 startPoint = new Vector3(-5.0f, -5.0f, 0.0f);
+        
+        //Vector3 startPoint = new Vector3(radius, -5.0f, 0.0f);
         int currentTriangle = 0;
 
         //Step 6: Compute the vertices, triangle vertices, and normal vectors at each vertex
@@ -46,7 +57,15 @@ public class CylinderMesh : MyMeshNxM
         {
             for (int m = 0; m < M; m++)
             {
-                verts[n * M + m] = startPoint + new Vector3(m * dM, n * dN, 0);
+                
+                //Obtain an angle in radians
+                double radAngle = ConvertDegreesToRadians(rotationDegrees / M);
+                //Increment angle by 2 * theta at each row of vectors
+                radAngle = radAngle * m;
+                //Compute the x and z values
+                float x = (float)(radius * Math.Cos(radAngle));
+                float z = (float)(radius * Math.Sin(radAngle));
+                verts[n * M + m] = new Vector3(x, n * dN, z);
 
                 // process two new triangles that can be traversed from that point
                 if (currentTriangle < numTriangles && m < M - 1)
