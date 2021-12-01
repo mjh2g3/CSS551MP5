@@ -6,12 +6,17 @@ public class TheWorld : MonoBehaviour
 {
     //The selected vertex sphere controller
     public GameObject mSelected;
-    public MyMeshNxM mMesh;
 
+    //The two meshes the user can toggle between (planar mMesh and cylinder cMesh)
+    public MyMeshNxM mMesh = null;
+    public CylinderMesh cMesh = null;
+
+    //Manipulation Controller spheres color properties
     private Color kSelectedColor = Color.red; // highlight color for selected obj
     private Color mOrgObjColor = Color.white; // remember obj's original color
 
-    private GameObject selectedAxis;
+    //Manipulation Axes color properties
+    private GameObject selectedAxis; //Selected axis for manipulation
     private Color selectedAxisColor = Color.yellow; // highlight color for selected axis manipulator
     private Color selectedAxisOrgColor; // original color for selected axis manipulator
 
@@ -22,7 +27,7 @@ public class TheWorld : MonoBehaviour
     void Start()
     {
         Debug.Assert(mMesh != null);
-        
+        Debug.Assert(cMesh != null);
     }
 
     // Update is called once per frame

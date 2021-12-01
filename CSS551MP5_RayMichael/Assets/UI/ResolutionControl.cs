@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResolutionControl : MonoBehaviour
 {
+    public TheWorld mModel = null;
+    public Dropdown MeshType = null;
+
+    public string MeshSelection = "Planar";
+
     public SliderWithEchoInt N, M;
+
     public MyMeshNxM mMesh;
+    public CylinderMesh cMesh;
 
     public SliderWithEchoInt Rotation;
 
@@ -16,6 +24,11 @@ public class ResolutionControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Dropdown menu
+        Debug.Assert(MeshType != null);
+        MeshType.onValueChanged.AddListener(UserSelection);
+        
+        Debug.Assert(mModel != null);
         Debug.Assert(N != null);
         Debug.Assert(M != null);
         N.SetSliderListener(NValueChanged);
@@ -50,6 +63,7 @@ public class ResolutionControl : MonoBehaviour
 
     void NValueChanged(int v)
     {
+        Debug.Log("Init of the res control N");
         int intV = (int)v;
         List<int> res = ReadMeshRes();
         int n = res[0];
@@ -62,6 +76,7 @@ public class ResolutionControl : MonoBehaviour
 
     void MValueChanged(int v)
     {
+        Debug.Log("Init of the res control M");
         int intV = (int)v;
         List<int> res = ReadMeshRes();
         int m = res[1];
@@ -75,6 +90,7 @@ public class ResolutionControl : MonoBehaviour
     //Cylinder rotation changed call method
     void RotationValueChanged(int v)
     {
+        Debug.Log("Init of the res control rotation");
         int intV = (int)v;
         double rotation = ReadMeshRotation();
         int r = (int)rotation;
@@ -114,5 +130,32 @@ public class ResolutionControl : MonoBehaviour
         List<int> res = ReadMeshRes();
         N.SetSliderValue(res[0]);  // do not need to call back for this comes from the object
         M.SetSliderValue(res[1]);
+
+        if (MeshSelection == "Cylinder")
+        {
+            double rotation = ReadMeshRotation();
+            Rotation.SetSliderValue((int)rotation);
+        }
+    }
+
+    public void SetMeshSelection(string m)
+    {
+        MeshSelection = m;
+    }
+
+    void UserSelection(int index)
+    {
+        if (index == 0)
+        {
+            Debug.Log("index is 0");
+        }
+        else
+        {
+            Debug.Log("index is 1");
+        }
+
+
+        //mCreateMenu.value = 0; // always show the menu function: Object to create
+
     }
 }

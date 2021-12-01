@@ -9,7 +9,6 @@ public partial class MainController : MonoBehaviour
         //Step 1: If LeftControl Key is Down, compute the controller spheres and normal vectors on mesh
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            // Debug.Log("left control pressed");
             //Switch On the vertex manipulation
             
             if (!ManipulatorAxesOn()) {
@@ -19,7 +18,6 @@ public partial class MainController : MonoBehaviour
             //Step2: If LeftControl Key is Down AND user selected with LMB
             if ((Input.GetMouseButtonDown(0)))
             {
-                //Debug.Log("Holding Down the Left Control AND MouseButton is clicked");
                 //if sphere selected, set mSelected
                 mousPosX = Input.mousePosition.x;
                 mousPosY = Input.mousePosition.y;
@@ -30,7 +28,6 @@ public partial class MainController : MonoBehaviour
                 {
                     if (hitInfo.transform.gameObject.name == "Sphere")
                     {
-                        Debug.Log(hitInfo.transform.gameObject.name);
                         SetSelectedObj(hitInfo.transform.gameObject);
                     }
                     else if (hitInfo.transform.gameObject.name.Contains("Manipulator"))
@@ -48,7 +45,6 @@ public partial class MainController : MonoBehaviour
             //Step3: Obtain the nextPosition for the mouse position at mouse button hold + LeftControl
             else if (Input.GetMouseButton(0))
             {
-                Debug.Log("Holding Down the Left Control AND MouseButton is held down");
                 //Step4: Compute the delta position change for the mouse using the initial and nextPosition
                 float dx = mousPosX - Input.mousePosition.x;
                 float dy = mousPosY - Input.mousePosition.y;
