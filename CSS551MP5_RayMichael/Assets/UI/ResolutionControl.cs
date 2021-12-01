@@ -7,8 +7,11 @@ public class ResolutionControl : MonoBehaviour
     public SliderWithEchoInt N, M;
     public MyMeshNxM mMesh;
 
+    public SliderWithEchoInt Rotation;
+
     private float prevSliderValuesN = 0;
     private float prevSliderValuesM = 0;
+    private float prevSliderValuesRotation = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +20,11 @@ public class ResolutionControl : MonoBehaviour
         Debug.Assert(M != null);
         N.SetSliderListener(NValueChanged);
         M.SetSliderListener(MValueChanged);
+
+        //Cylinder mesh rotation code
+        Debug.Assert(Rotation != null);
+        Rotation.SetSliderListener(RotationValueChanged);
+
         InitSliders();
     }
 
@@ -34,6 +42,10 @@ public class ResolutionControl : MonoBehaviour
 
         N.InitSliderRange(2, 20, 2);
         M.InitSliderRange(2, 20, 2);
+
+        //Cylinder Rotation initialization
+        prevSliderValuesRotation = 0;
+        Rotation.InitSliderRange(10, 360, 10);
     }
 
     void NValueChanged(int v)
@@ -60,6 +72,25 @@ public class ResolutionControl : MonoBehaviour
         UISetMeshResolution(ref res);
     }
 
+    //Cylinder rotation changed call method
+    void RotationValueChanged(int v)
+    {
+        int intV = (int)v;
+        double rotation = ReadMeshRotation();
+        int r = (int)rotation;
+        prevSliderValuesRotation = (float)r;
+        r = intV;
+        //m = (int)v;
+        rotation = r;
+        UISetMeshRotation(ref rotation);
+    }
+
+    private double ReadMeshRotation()
+    {
+        double rotation = mMesh.GetRotation();
+        return rotation;
+    }
+
     private List<int> ReadMeshRes()
     {
         List<int> res = mMesh.GetResolution();
@@ -70,6 +101,12 @@ public class ResolutionControl : MonoBehaviour
     {
         List<int> res = r;
         mMesh.SetResolution(res);
+    }
+
+    //Cylinder code
+    private void UISetMeshRotation(ref double rotation)
+    {
+        mMesh.SetRotation(rotation);
     }
 
     public void MeshSetUI()

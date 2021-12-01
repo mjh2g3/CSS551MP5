@@ -2746,6 +2746,7 @@ MonoBehaviour:
   N: {fileID: 1094987237}
   M: {fileID: 163614335}
   mMesh: {fileID: 769135587}
+  Rotation: {fileID: 1502626294}
 --- !u!1 &1333813868
 GameObject:
   m_ObjectHideFlags: 0
@@ -2982,7 +2983,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1502626292}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5710f66b36a37704288323bf40956877, type: 3}
+  m_Script: {fileID: 11500000, guid: bb3c6b5ef03890a4195f8a7b5f6e1394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TheSlider: {fileID: 2004474189}
