@@ -99,9 +99,6 @@ public partial class MyMeshNxM : MonoBehaviour {
         theMesh.triangles = tris; //  new int[3];
         theMesh.normals = norms;
 
-        //Step 8: Initialize the sphere controllers and normal vector line segments
-        //InitControllers(vects);
-        //InitNormals(vects, norms);
     }
 
 
