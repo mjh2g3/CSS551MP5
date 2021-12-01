@@ -115,4 +115,16 @@ public class CylinderMesh : MyMeshNxM
             }
         }
     }
+
+    //no need to override if applying a mesh object with CylinderMesh script just fyi
+    public override void SetRotation(double rotation)
+    {
+        rotationDegrees = rotation;
+    }
+
+    //no need to override if applying a mesh object with CylinderMesh script just fyi
+    public override double GetRotation()
+    {
+        return rotationDegrees;
+    }
 }

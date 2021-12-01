@@ -175,5 +175,17 @@ public partial class MyMeshNxM : MonoBehaviour {
             mNormals = null;
         }
     }
-    
+
+    //no need to override if applying a mesh object with CylinderMesh script just fyi
+    public virtual void SetRotation(double rotation)
+    {
+        
+    }
+
+    //no need to override if applying a mesh object with CylinderMesh script just fyi
+    public virtual double GetRotation()
+    {
+        return 0.0;
+    }
+
 }
