@@ -6,6 +6,7 @@ public class TheWorld : MonoBehaviour
 {
     //The selected vertex sphere controller
     public GameObject mSelected;
+    public int dropDownIndx = 0; //index 0 == planar, index 1 == cylinder
 
     //The two meshes the user can toggle between (planar mMesh and cylinder cMesh)
     public MyMeshNxM mMesh = null;
@@ -26,8 +27,13 @@ public class TheWorld : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Step 1: Both planar and cylinder mesh are initialized
         Debug.Assert(mMesh != null);
         Debug.Assert(cMesh != null);
+
+        //Step 2: Set the cylinder mesh to inactive so that it does not show up
+        Debug.Log("Set the cMesh inActive");
+        cMesh.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
