@@ -72,6 +72,7 @@ public class ResolutionControl : MonoBehaviour
         //n = (int)v;
         res[0] = n;
         UISetMeshResolution(ref res);
+        mModel.DestroyManipulatorAxes();
     }
 
     void MValueChanged(int v)
@@ -85,6 +86,27 @@ public class ResolutionControl : MonoBehaviour
         //m = (int)v;
         res[1] = m;
         UISetMeshResolution(ref res);
+        mModel.DestroyManipulatorAxes();
+    }
+
+    //Cylinder rotation changed call method
+    void RotationValueChanged(int v)
+    {
+        Debug.Log("Init of the res control rotation");
+        int intV = (int)v;
+        double rotation = ReadMeshRotation();
+        int r = (int)rotation;
+        prevSliderValuesRotation = (float)r;
+        r = intV;
+        //m = (int)v;
+        rotation = r;
+        UISetMeshRotation(ref rotation);
+    }
+
+    private double ReadMeshRotation()
+    {
+        double rotation = mMesh.GetRotation();
+        return rotation;
     }
 
     //Cylinder rotation changed call method
