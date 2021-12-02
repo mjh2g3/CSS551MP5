@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class XfromControl : MonoBehaviour {
     public Toggle T, R, S;
     public SliderWithEcho X, Y, Z;
-    public Text ObjectName;
-
-    private Transform mSelected;
+    public TexturePlacement texture;
     private Vector3 mPreviousSliderValues = Vector3.zero;
 
 	// Use this for initialization
@@ -34,7 +32,7 @@ public class XfromControl : MonoBehaviour {
         mPreviousSliderValues = p;
         X.InitSliderRange(-4, 4, p.x);
         Y.InitSliderRange(-4, 4, p.y);
-        Z.InitSliderRange(0, 2, 1f);
+        Z.InitSliderRange(1, 1, 1f);
     }
 
     void SetToScaling(bool v)
@@ -53,19 +51,16 @@ public class XfromControl : MonoBehaviour {
         X.InitSliderRange(0, 0, r.x);
         Y.InitSliderRange(0, 0, r.y);
         Z.InitSliderRange(-180, 180, r.z);
-        mPreviousSliderValues = r;
     }
-    //---------------------------------------------------------------------------------
-
     //---------------------------------------------------------------------------------
     // resopond to sldier bar value changes
     void XValueChanged(float v)
     {
         Vector3 p = ReadObjectXfrom();
         // if not in rotation, next two lines of work would be wasted
-            float dx = v - mPreviousSliderValues.x;
-            mPreviousSliderValues.x = v;
-            Quaternion q = Quaternion.AngleAxis(dx, Vector3.right);
+        float dx = v - mPreviousSliderValues.x;
+        mPreviousSliderValues.x = v;
+        Quaternion q = Quaternion.AngleAxis(dx, Vector3.right);
         p.x = v;
         UISetObjectXform(ref p, ref q);
     }
@@ -73,38 +68,25 @@ public class XfromControl : MonoBehaviour {
     void YValueChanged(float v)
     {
         Vector3 p = ReadObjectXfrom();
-            // if not in rotation, next two lines of work would be wasted
-            float dy = v - mPreviousSliderValues.y;
-            mPreviousSliderValues.y = v;
-            Quaternion q = Quaternion.AngleAxis(dy, Vector3.up);
-        p.y = v;        
+        // if not in rotation, next two lines of work would be wasted
+        float dy = v - mPreviousSliderValues.y;
+        mPreviousSliderValues.y = v;
+        Quaternion q = Quaternion.AngleAxis(dy, Vector3.up);
+        p.y = v;
         UISetObjectXform(ref p, ref q);
     }
 
     void ZValueChanged(float v)
     {
         Vector3 p = ReadObjectXfrom();
-            // if not in rotation, next two lines of work would be wasterd
-            float dz = v - mPreviousSliderValues.z;
-            mPreviousSliderValues.z = v;
-            Quaternion q = Quaternion.AngleAxis(dz, Vector3.forward);
+        // if not in rotation, next two lines of work would be wasterd
+        float dz = v - mPreviousSliderValues.z;
+        mPreviousSliderValues.z = v;
+        Quaternion q = Quaternion.AngleAxis(dz, Vector3.forward);
         p.z = v;
         UISetObjectXform(ref p, ref q);
     }
     //---------------------------------------------------------------------------------
-
-    // new object selected
-    public void SetSelectedObject(Transform xform)
-    {
-        mSelected = xform;
-
-        mPreviousSliderValues = Vector3.zero;
-        if (xform != null)
-            ObjectName.text = "Selected:" + xform.name;
-        else
-            ObjectName.text = "Selected: none";
-        ObjectSetUI();
-    }
 
     public void ObjectSetUI()
     {
@@ -120,17 +102,11 @@ public class XfromControl : MonoBehaviour {
         
         if (T.isOn)
         {
-            if (mSelected != null)
-                p = mSelected.localPosition;
-            else
-                p = Vector3.zero;
+            p = texture.Offset;
         }
         else if (S.isOn)
         {
-            if (mSelected != null)
-                p = mSelected.localScale;
-            else
-                p = Vector3.one;
+            p = texture.Scale;
         }
         else
         {
@@ -141,19 +117,16 @@ public class XfromControl : MonoBehaviour {
 
     private void UISetObjectXform(ref Vector3 p, ref Quaternion q)
     {
-        if (mSelected == null)
-            return;
-
         if (T.isOn)
         {
-            mSelected.localPosition = p;
+            texture.Offset = p;
         }
         else if (S.isOn)
         {
-            mSelected.localScale = p;
+            texture.Scale = p;
         } else
         {
-            mSelected.localRotation *= q;
+            
         }
     }
 }

@@ -5,16 +5,16 @@ using UnityEngine;
 
 public partial class MyMeshNxM : MonoBehaviour {
 
-    private float meshLength = 10.0f;
-    private float meshWidth = 10.0f;
+    protected float meshLength = 10.0f;
+    protected float meshWidth = 10.0f;
 
-    private int N = 2;
+    protected int N = 2;
+    protected int M = 2;
 
-    private int M = 2;
-
-    private Vector3[] verts;         // NxM Mesh needs NxM vertices
-    private int[] tris;  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
-    private Vector3[] norms;
+    protected Vector3[] verts; // vertices on the mesh
+    protected int[] tris; // triangles defined by vertices
+    protected Vector3[] norms; // normals at each vertex
+    protected Vector2[] uv; // uv values for texture mapping
 
     private bool ManipulationOn = false;
 
@@ -46,7 +46,7 @@ public partial class MyMeshNxM : MonoBehaviour {
         theMesh.normals = n;
     }
 
-    private void MeshInitialization()
+    public virtual void MeshInitialization()
     {
         //Step 1: Obtain the mesh component and delete whatever is there
         Mesh theMesh = GetComponent<MeshFilter>().mesh;   // get the mesh component
@@ -55,32 +55,34 @@ public partial class MyMeshNxM : MonoBehaviour {
         //Step 2: Identify the number of N, M, and Triangles
         int numTriangles = (N - 1) * (M - 1) * 2;
         
-        //Step 3: Create arrays to store vertices in mesh, triangle vertices, and normal vectors
+        //Step 3: Create arrays for vertices, triangle vertices, normals, and uv vertices
         verts = new Vector3[N * M];         // NxM Mesh needs NxM vertices
         tris = new int[numTriangles * 3];  // Number of triangles = (N-1) * (M-1) * 2, and each triangle has 3 vertices
         norms = new Vector3[N * M];         // MUST be the same as number of vertices
-
-        Debug.Log("verts: " + verts.Length);
-        Debug.Log("norms: " + norms.Length);
-        Debug.Log("break");
-        // Debug.Break();
+        uv = new Vector2[N * M];
 
         //Step 4: Define dN and dM which are the distances between each vertex in the N and M direction
         float dN = meshLength / (N - 1);
         float dM = meshWidth / (M - 1);
 
-        //Step 5: Define a start point (lower left corner of mesh) and variable to track which triangle is being created
-        Vector3 startPoint = new Vector3(-5.0f, 0.0f, -5.0f);
+        //Step 5a: Define a start point (lower left corner of mesh) and variable to track which triangle is being created
+        Vector3 startVertex = new Vector3(-5.0f, 0.0f, -5.0f);
         int currentTriangle = 0;
+
+        //Step 5b: Define start point (lower left corner of mesh) for the UV vertices
+        Vector2 startUV = new Vector2(-5, -5);
 
         //Step 6: Compute the vertices, triangle vertices, and normal vectors at each vertex
         for (int n = 0; n < N; n++)
         {
             for (int m = 0; m < M; m++)
             {
-                verts[n * M + m] = startPoint + new Vector3(m * dM, 0, n * dN);
+                // define current vertex position
+                verts[n * M + m] = startVertex + new Vector3(m * dM, 0, n * dN);
 
-                // process two new triangles that can be traversed from that point
+                uv[n * M + m] = startUV + new Vector2(m * dM / meshWidth, n * dN/meshLength);
+
+                // process two new triangles that can be traversed from current vertex
                 if (currentTriangle < numTriangles && m < M - 1)
                 {
                     tris[currentTriangle * 3] = n * M + m;
@@ -101,13 +103,12 @@ public partial class MyMeshNxM : MonoBehaviour {
         }
 
         //Step 7: Assign the vertices, triangles, and normal vectors to the mesh
-        theMesh.vertices = verts; //  new Vector3[3];
-        theMesh.triangles = tris; //  new int[3];
+        theMesh.vertices = verts;
+        theMesh.triangles = tris;
         theMesh.normals = norms;
+        theMesh.uv = uv;
 
-        //Step 8: Initialize the sphere controllers and normal vector line segments
-        //InitControllers(vects);
-        //InitNormals(vects, norms);
+        GetComponent<TexturePlacement>().SaveInitUV(uv);
     }
 
 
@@ -127,6 +128,7 @@ public partial class MyMeshNxM : MonoBehaviour {
             {
                 Destroy(mNormals[i].gameObject);
                 Destroy(mControllers[i]);
+                
             }
         }
 
@@ -181,5 +183,17 @@ public partial class MyMeshNxM : MonoBehaviour {
             mNormals = null;
         }
     }
-    
+
+    //no need to override if applying a mesh object with CylinderMesh script just fyi
+    public virtual void SetRotation(double rotation)
+    {
+        
+    }
+
+    //no need to override if applying a mesh object with CylinderMesh script just fyi
+    public virtual double GetRotation()
+    {
+        return 0.0;
+    }
+
 }
