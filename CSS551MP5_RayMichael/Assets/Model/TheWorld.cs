@@ -58,5 +58,6 @@ public partial class TheWorld : MonoBehaviour
             mSelected.GetComponent<Renderer>().material.color = mOrgObjColor;
             mSelected = null;
         }
+            
     }
 }

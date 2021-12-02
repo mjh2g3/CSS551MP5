@@ -51,7 +51,6 @@ public partial class TheWorld : MonoBehaviour
             if (dropDownIndx == 0)
             {
                 mMesh.SwitchOnManipulation(status);
-                
                 if (status == false)
                 {
                     DestroyManipulatorAxes();
