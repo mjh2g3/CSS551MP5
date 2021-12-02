@@ -148,14 +148,12 @@ public class ResolutionControl : MonoBehaviour
         if (index == 0)
         {
             Debug.Log("index is 0");
+            mModel.SetMeshType(index);
         }
         else
         {
             Debug.Log("index is 1");
+            mModel.SetMeshType(index);
         }
-
-
-        //mCreateMenu.value = 0; // always show the menu function: Object to create
-
     }
 }
