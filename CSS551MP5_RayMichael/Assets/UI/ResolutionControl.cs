@@ -15,6 +15,8 @@ public class ResolutionControl : MonoBehaviour
     public MyMeshNxM mMesh;
     public CylinderMesh cMesh;
 
+    public TexturePlacement texture = null;
+
     public SliderWithEchoInt Rotation;
 
     private float prevSliderValuesN = 0;
@@ -24,6 +26,8 @@ public class ResolutionControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Assert(texture != null);
+        
         //Dropdown menu
         Debug.Assert(MeshType != null);
         MeshType.onValueChanged.AddListener(UserSelection);
@@ -185,6 +189,7 @@ public class ResolutionControl : MonoBehaviour
         {
             Debug.Log("index is 0");
             mModel.SetMeshType(index);
+            texture.SetMeshType(index);
             curType = index;
             InitSliders();
         }
@@ -192,6 +197,7 @@ public class ResolutionControl : MonoBehaviour
         {
             Debug.Log("index is 1");
             mModel.SetMeshType(index);
+            texture.SetMeshType(index);
             curType = index;
             InitSliders();
         }

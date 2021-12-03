@@ -113,6 +113,10 @@ public class CylinderMesh : MyMeshNxM
                 Renderer rend = mControllers[i].GetComponent<Renderer>();
                 rend.material.color = Color.black;
             }
+            else
+            {
+                mControllers[i].transform.name = "ManSphere";
+            }
         }
     }
 
@@ -140,15 +144,6 @@ public class CylinderMesh : MyMeshNxM
             InitNormals(verts, norms);
         }
     }
-
-
-
-
-
-
-
-
-
 
     //no need to override if applying a mesh object with CylinderMesh script just fyi
     public override double GetRotation()

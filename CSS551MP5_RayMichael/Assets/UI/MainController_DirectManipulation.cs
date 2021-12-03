@@ -4,6 +4,7 @@ using UnityEngine;
 
 public partial class MainController : MonoBehaviour
 {
+    
     public void DirectManipulation()
     {
         //Step 1: If LeftControl Key is Down, compute the controller spheres and normal vectors on mesh
@@ -26,7 +27,7 @@ public partial class MainController : MonoBehaviour
                 bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity);
                 if (hit)
                 {
-                    if (hitInfo.transform.gameObject.name == "Sphere")
+                    if (hitInfo.transform.gameObject.name == "ManSphere")
                     {
                         SetSelectedObj(hitInfo.transform.gameObject);
                     }

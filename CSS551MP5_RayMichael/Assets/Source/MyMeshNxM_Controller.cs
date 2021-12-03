@@ -13,6 +13,7 @@ public partial class MyMeshNxM : MonoBehaviour {
         for (int i =0; i<v.Length; i++ )
         {
             mControllers[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            mControllers[i].transform.name = "ManSphere";
             mControllers[i].transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
             mControllers[i].transform.localPosition = v[i];
