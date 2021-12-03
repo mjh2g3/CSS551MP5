@@ -4,6 +4,7 @@ using UnityEngine;
 
 public partial class MainController : MonoBehaviour
 {
+    
     public void DirectManipulation()
     {
         //Step 1: If LeftControl Key is Down, compute the controller spheres and normal vectors on mesh
@@ -26,7 +27,7 @@ public partial class MainController : MonoBehaviour
                 bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity);
                 if (hit)
                 {
-                    if (hitInfo.transform.gameObject.name == "Sphere")
+                    if (hitInfo.transform.gameObject.name == "ManSphere")
                     {
                         SetSelectedObj(hitInfo.transform.gameObject);
                     }
@@ -52,6 +53,7 @@ public partial class MainController : MonoBehaviour
                 mousPosX = Input.mousePosition.x;
                 mousPosY = Input.mousePosition.y;
 
+                /*
                 if (Input.GetMouseButton(0) && draggingAxis) // 
                 {
                     string axis = GetSelectedAxis();
@@ -61,6 +63,19 @@ public partial class MainController : MonoBehaviour
                         mSelected.localPosition += new Vector3(0, -dy * dragSpeed, 0);
                     else 
                         mSelected.localPosition += new Vector3(0, 0, -dy * dragSpeed);
+                }
+                */
+                if (Input.GetMouseButton(0) && draggingAxis) // 
+                {
+                    string axis = GetSelectedAxis();
+                    if (axis == "X")
+                        mModel.UpdateSelected(new Vector3(-dx * dragSpeed, 0, 0));
+                    else if (axis == "Y")
+                        
+                        mModel.UpdateSelected(new Vector3(0, -dy * dragSpeed, 0));
+                    else
+                        
+                        mModel.UpdateSelected(new Vector3(0, 0, -dy * dragSpeed));
                 }
             }
 

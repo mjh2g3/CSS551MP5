@@ -16,7 +16,7 @@ public partial class MyMeshNxM : MonoBehaviour {
     protected Vector3[] norms; // normals at each vertex
     protected Vector2[] uv; // uv values for texture mapping
 
-    private bool ManipulationOn = false;
+    protected bool ManipulationOn = false;
 
     // Use this for initialization
     void Start () {

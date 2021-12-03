@@ -1537,6 +1537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd48dbf2ac364340b53004c0c01a7e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Offset: {x: 0, y: 0}
   Scale: {x: 1, y: 1}
 --- !u!1 &778051438
@@ -2869,11 +2870,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mModel: {fileID: 1585593899}
   MeshType: {fileID: 1220288609}
-  MeshSelection: Planar
+  curType: 0
   N: {fileID: 1094987237}
   M: {fileID: 163614335}
   mMesh: {fileID: 769135587}
   cMesh: {fileID: 1316174920}
+  texture: {fileID: 769135588}
   Rotation: {fileID: 1502626294}
 --- !u!1 &1333813868
 GameObject:

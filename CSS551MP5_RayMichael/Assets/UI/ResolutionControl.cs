@@ -8,12 +8,14 @@ public class ResolutionControl : MonoBehaviour
     public TheWorld mModel = null;
     public Dropdown MeshType = null;
 
-    public string MeshSelection = "Planar";
+    public int curType = 0;
 
     public SliderWithEchoInt N, M;
 
     public MyMeshNxM mMesh;
     public CylinderMesh cMesh;
+
+    public TexturePlacement texture = null;
 
     public SliderWithEchoInt Rotation;
 
@@ -24,6 +26,8 @@ public class ResolutionControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Assert(texture != null);
+        
         //Dropdown menu
         Debug.Assert(MeshType != null);
         MeshType.onValueChanged.AddListener(UserSelection);
@@ -53,37 +57,59 @@ public class ResolutionControl : MonoBehaviour
         prevSliderValuesN = res[0];
         prevSliderValuesM = res[1];
 
-        N.InitSliderRange(2, 20, 2);
-        M.InitSliderRange(2, 20, 2);
+        if (curType == 0)
+        {
+            N.InitSliderRange(2, 20, 2);
+            M.InitSliderRange(2, 20, 2);
+        }
+        else if (curType == 1)
+        {
+            N.InitSliderRange(4, 20, 4);
+            M.InitSliderRange(4, 20, 4);
+        }
 
         //Cylinder Rotation initialization
-        prevSliderValuesRotation = 0;
+        double rot = ReadMeshRotation();
+        prevSliderValuesRotation = (float)rot;
         Rotation.InitSliderRange(10, 360, 10);
     }
 
     void NValueChanged(int v)
     {
-        Debug.Log("Init of the res control N");
-        int intV = (int)v;
-        List<int> res = ReadMeshRes();
-        int n = res[0];
-        prevSliderValuesN = (float)n;
-        n = intV;
-        //n = (int)v;
-        res[0] = n;
-        UISetMeshResolution(ref res);
-        mModel.DestroyManipulatorAxes();
+        if (curType == 0)
+        {
+            Debug.Log("Init of the res control N PLANE");
+            int intV = (int)v;
+            List<int> res = ReadMeshRes();
+            int n = res[0];
+            prevSliderValuesN = (float)n;
+            n = intV;
+            res[0] = n;
+            UISetMeshResolution(ref res);
+            mModel.DestroyManipulatorAxes();
+        }
+        else if (curType == 1)
+        {
+            Debug.Log("Init of the res control N CYLINDER");
+            int intV = (int)v;
+            List<int> res = ReadMeshRes();
+            int n = res[0];
+            prevSliderValuesN = (float)n;
+            n = intV;
+            res[0] = n;
+            UISetMeshResolution(ref res);
+            mModel.DestroyManipulatorAxes();
+        }
     }
 
     void MValueChanged(int v)
     {
-        Debug.Log("Init of the res control M");
+        Debug.Log("Init of the res control M PLANE");
         int intV = (int)v;
         List<int> res = ReadMeshRes();
         int m = res[1];
         prevSliderValuesM = (float)m;
         m = intV;
-        //m = (int)v;
         res[1] = m;
         UISetMeshResolution(ref res);
         mModel.DestroyManipulatorAxes();
@@ -98,9 +124,9 @@ public class ResolutionControl : MonoBehaviour
         int r = (int)rotation;
         prevSliderValuesRotation = (float)r;
         r = intV;
-        //m = (int)v;
         rotation = r;
         UISetMeshRotation(ref rotation);
+        mModel.DestroyManipulatorAxes();
     }
 
     private double ReadMeshRotation()
@@ -111,20 +137,37 @@ public class ResolutionControl : MonoBehaviour
 
     private List<int> ReadMeshRes()
     {
-        List<int> res = mMesh.GetResolution();
+        List<int> res = new List<int>();
+        if (curType == 0)
+        {
+            res = mMesh.GetResolution();
+        }
+        else if (curType == 1)
+        {
+            res = cMesh.GetResolution();
+        }
+
         return res;
     }
 
     private void UISetMeshResolution(ref List<int> r)
     {
         List<int> res = r;
-        mMesh.SetResolution(res);
+        if (curType == 0)
+        {
+            mMesh.SetResolution(res);
+        }
+        else if (curType == 1)
+        {
+            cMesh.SetResolution(res);
+        }
+        
     }
 
     //Cylinder code
     private void UISetMeshRotation(ref double rotation)
     {
-        mMesh.SetRotation(rotation);
+        cMesh.SetRotation(rotation);
     }
 
     public void MeshSetUI()
@@ -133,17 +176,12 @@ public class ResolutionControl : MonoBehaviour
         N.SetSliderValue(res[0]);  // do not need to call back for this comes from the object
         M.SetSliderValue(res[1]);
 
-        if (MeshSelection == "Cylinder")
-        {
-            double rotation = ReadMeshRotation();
-            Rotation.SetSliderValue((int)rotation);
-        }
+        
+        double rotation = ReadMeshRotation();
+        Rotation.SetSliderValue((int)rotation);
     }
 
-    public void SetMeshSelection(string m)
-    {
-        MeshSelection = m;
-    }
+    
 
     void UserSelection(int index)
     {
@@ -151,11 +189,17 @@ public class ResolutionControl : MonoBehaviour
         {
             Debug.Log("index is 0");
             mModel.SetMeshType(index);
+            texture.SetMeshType(index);
+            curType = index;
+            InitSliders();
         }
         else
         {
             Debug.Log("index is 1");
             mModel.SetMeshType(index);
+            texture.SetMeshType(index);
+            curType = index;
+            InitSliders();
         }
     }
 }
