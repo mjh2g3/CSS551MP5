@@ -20,7 +20,7 @@ public partial class MyMeshNxM : MonoBehaviour
         UpdateNormals(v, n);
     }
 
-    void UpdateNormals(Vector3[] v, Vector3[] n)
+    protected void UpdateNormals(Vector3[] v, Vector3[] n)
     {
         for (int i = 0; i < v.Length; i++)
         {
@@ -28,14 +28,14 @@ public partial class MyMeshNxM : MonoBehaviour
         }
     }
 
-    Vector3 FaceNormal(Vector3[] v, int i0, int i1, int i2)
+    protected Vector3 FaceNormal(Vector3[] v, int i0, int i1, int i2)
     {
         Vector3 a = v[i1] - v[i0];
         Vector3 b = v[i2] - v[i0];
         return Vector3.Cross(a, b).normalized;
     }
 
-    void ComputeNormals(Vector3[] v, Vector3[] n)
+    public virtual void ComputeNormals(Vector3[] v, Vector3[] n)
     {
         //Use list where index of outer List == vertex v index (v0, v1, v2, etc.),
         //the inner List will carry all of the indexes of the triangles that touch the vertex v

@@ -20,4 +20,9 @@ public partial class MyMeshNxM : MonoBehaviour {
             mControllers[i].transform.parent = this.transform;
         }
     }
+
+    public GameObject[] GetControllers()
+    {
+        return mControllers;
+    }
 }

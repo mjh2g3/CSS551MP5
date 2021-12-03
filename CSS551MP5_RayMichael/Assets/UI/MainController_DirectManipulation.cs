@@ -53,6 +53,7 @@ public partial class MainController : MonoBehaviour
                 mousPosX = Input.mousePosition.x;
                 mousPosY = Input.mousePosition.y;
 
+                /*
                 if (Input.GetMouseButton(0) && draggingAxis) // 
                 {
                     string axis = GetSelectedAxis();
@@ -62,6 +63,19 @@ public partial class MainController : MonoBehaviour
                         mSelected.localPosition += new Vector3(0, -dy * dragSpeed, 0);
                     else 
                         mSelected.localPosition += new Vector3(0, 0, -dy * dragSpeed);
+                }
+                */
+                if (Input.GetMouseButton(0) && draggingAxis) // 
+                {
+                    string axis = GetSelectedAxis();
+                    if (axis == "X")
+                        mModel.UpdateSelected(new Vector3(-dx * dragSpeed, 0, 0));
+                    else if (axis == "Y")
+                        
+                        mModel.UpdateSelected(new Vector3(0, -dy * dragSpeed, 0));
+                    else
+                        
+                        mModel.UpdateSelected(new Vector3(0, 0, -dy * dragSpeed));
                 }
             }
 
