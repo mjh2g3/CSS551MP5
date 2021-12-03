@@ -4,9 +4,9 @@ using UnityEngine;
 
 public partial class MyMeshNxM : MonoBehaviour
 {
-    LineSegment[] mNormals;
+    protected LineSegment[] mNormals;
 
-    void InitNormals(Vector3[] v, Vector3[] n)
+    protected void InitNormals(Vector3[] v, Vector3[] n)
     {
         mNormals = new LineSegment[v.Length];
         

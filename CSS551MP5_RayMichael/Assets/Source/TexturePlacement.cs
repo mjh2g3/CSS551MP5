@@ -17,7 +17,7 @@ public class TexturePlacement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-        Mesh theMesh = GetComponent<MeshFilter>().mesh;
+        Mesh theMesh = GameObject.Find("Mesh Quad").GetComponent<MeshFilter>().mesh;
         Vector2[] uv = theMesh.uv;
         for (int i = 0; i < uv.Length; i++)
         {

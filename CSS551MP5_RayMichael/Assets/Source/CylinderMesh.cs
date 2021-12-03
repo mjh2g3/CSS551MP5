@@ -119,8 +119,36 @@ public class CylinderMesh : MyMeshNxM
     //no need to override if applying a mesh object with CylinderMesh script just fyi
     public override void SetRotation(double rotation)
     {
+        if (mControllers != null)
+        {
+            for (int i = 0; i < mNormals.Length; i++)
+            {
+                Destroy(mNormals[i].gameObject);
+                Destroy(mControllers[i]);
+
+            }
+        }
+        mControllers = null;
+        mNormals = null;
+
         rotationDegrees = rotation;
+        MeshInitialization();
+        if (ManipulationOn)
+        {
+            //Step 8: Initialize the sphere controllers and normal vector line segments
+            InitControllers(verts);
+            InitNormals(verts, norms);
+        }
     }
+
+
+
+
+
+
+
+
+
 
     //no need to override if applying a mesh object with CylinderMesh script just fyi
     public override double GetRotation()
