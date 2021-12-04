@@ -7,7 +7,8 @@ public class CylinderMesh : MyMeshNxM
 {
     private double rotationDegrees = 10.0;
     private float radius = 5.0f;
-    
+
+
     private double ConvertDegreesToRadians(double degrees)
     {
         double rad = (Math.PI / 180.0) * degrees;
