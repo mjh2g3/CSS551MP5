@@ -21,16 +21,14 @@ public class TexturePlacement : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
     {
-      Mesh theMesh = GetComponent<MeshFilter>().mesh;
-      Vector2[] uv = theMesh.uv;
-      for (int i = 0; i < uv.Length; i++)
+        Mesh theMesh = GetComponent<MeshFilter>().mesh;
+        Vector2[] uv = theMesh.uv;
+        Matrix3x3 translationMatrix = Matrix3x3Helpers.CreateTranslation(Offset);
+        Matrix3x3 scaleMatrix = Matrix3x3Helpers.CreateScale(Scale);
+        Matrix3x3 rotationMatrix = Matrix3x3Helpers.CreateRotation(Rotation);
+        for (int i = 0; i < uv.Length; i++)
       {
-          uv[i].x = mInitUV[i].x * Scale.x;
-          uv[i].y = mInitUV[i].y * Scale.y;
-          uv[i] = Offset + uv[i];
-
-          Matrix3x3 rotationMatrix = Matrix3x3Helpers.CreateRotation(Rotation);
-          uv[i] = rotationMatrix * uv[i];
+          uv[i] =  translationMatrix * rotationMatrix * scaleMatrix * mInitUV[i];
       }
       theMesh.uv = uv;
     }
