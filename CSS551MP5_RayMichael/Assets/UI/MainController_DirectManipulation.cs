@@ -24,7 +24,7 @@ public partial class MainController : MonoBehaviour
                 mousPosY = Input.mousePosition.y;
 
                 RaycastHit hitInfo = new RaycastHit();
-                bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity);
+                bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity, LayerMask.GetMask("Manipulator"));
                 if (hit)
                 {
                     if (hitInfo.transform.gameObject.name == "ManSphere")

@@ -95,6 +95,8 @@ public class CylinderMesh : MyMeshNxM
         //Step 8: Initialize the sphere controllers and normal vector line segments
         //InitControllers(vects);
         //InitNormals(vects, norms);
+
+        // ComputeNormals(verts, norms);
     }
 
     //Updated the color of the manipulation spheres; only the edge spheres are to be white and manipulatable
@@ -116,7 +118,7 @@ public class CylinderMesh : MyMeshNxM
             else if (i % M == 0)
             {
                 mControllers[i].transform.name = "ManSphere";
-                
+                mControllers[i].layer = LayerMask.NameToLayer("Manipulator");
             }
         }
 

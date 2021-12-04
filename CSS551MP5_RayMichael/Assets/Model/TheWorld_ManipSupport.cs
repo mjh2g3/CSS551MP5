@@ -76,6 +76,7 @@ public partial class TheWorld : MonoBehaviour
         xAxis.transform.localScale = new Vector3(0.25f, 1, 0.25f);
         xAxis.transform.name = "X Manipulator";
         xAxis.transform.parent = axisGroup.transform;
+        xAxis.layer = LayerMask.NameToLayer("Manipulator");
 
 
         yAxis = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
@@ -83,12 +84,14 @@ public partial class TheWorld : MonoBehaviour
         yAxis.transform.localScale = new Vector3(0.25f, 1, 0.25f);
         yAxis.transform.name = "Y Manipulator";
         yAxis.transform.parent = axisGroup.transform;
+        yAxis.layer = LayerMask.NameToLayer("Manipulator");
 
         zAxis = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         zAxis.GetComponent<Renderer>().material.color = Color.blue;
         zAxis.transform.localScale = new Vector3(0.25f, 1, 0.25f);
         zAxis.transform.name = "Z Manipulator";
         zAxis.transform.parent = axisGroup.transform;
+        zAxis.layer = LayerMask.NameToLayer("Manipulator");
     }
 
     public bool ManipulatorAxesOn()
