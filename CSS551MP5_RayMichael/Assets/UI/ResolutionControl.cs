@@ -57,19 +57,33 @@ public class ResolutionControl : MonoBehaviour
 
         if (curType == 0)
         {
-            N.InitSliderRange(2, 20, 2);
-            M.InitSliderRange(2, 20, 2);
+            N.InitSliderRange(2, 20, (int)prevSliderValuesN);
+            M.InitSliderRange(2, 20, (int)prevSliderValuesM);
         }
         else if (curType == 1)
         {
-            N.InitSliderRange(4, 20, 4);
-            M.InitSliderRange(4, 20, 4);
-        }
+            if (prevSliderValuesN < 4.0f)
+            {
+                N.InitSliderRange(4, 20, 4);
+            }
+            else
+            {
+                N.InitSliderRange(4, 20, (int)prevSliderValuesN);
+            }
+            if (prevSliderValuesM < 4.0f)
+            {
+                M.InitSliderRange(4, 20, 4);
+            }
+            else
+            {
+                M.InitSliderRange(4, 20, (int)prevSliderValuesM);
+            }
+            //Cylinder Rotation initialization
+            double rot = ReadMeshRotation();
+            prevSliderValuesRotation = (float)rot;
+            Rotation.InitSliderRange(10, 360, (int)prevSliderValuesRotation);
 
-        //Cylinder Rotation initialization
-        double rot = ReadMeshRotation();
-        prevSliderValuesRotation = (float)rot;
-        Rotation.InitSliderRange(10, 360, 10);
+        }
     }
 
     void NValueChanged(int v)
@@ -129,7 +143,7 @@ public class ResolutionControl : MonoBehaviour
 
     private double ReadMeshRotation()
     {
-        double rotation = mMesh.GetRotation();
+        double rotation = cMesh.GetRotation();
         return rotation;
     }
 
