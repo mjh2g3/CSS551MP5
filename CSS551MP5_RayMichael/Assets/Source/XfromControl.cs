@@ -32,7 +32,7 @@ public class XfromControl : MonoBehaviour {
         mPreviousSliderValues = p;
         X.InitSliderRange(-4, 4, p.x);
         Y.InitSliderRange(-4, 4, p.y);
-        Z.InitSliderRange(1, 1, 1f);
+        Z.InitSliderRange(1, 1, p.z);
     }
 
     void SetToScaling(bool v)
@@ -129,5 +129,16 @@ public class XfromControl : MonoBehaviour {
         {
             texture.Rotation = p.z;
         }
+    }
+
+    private float correctAngles(float angle)
+    {
+        // angle = (angle > 180) ? angle - 360 : angle;
+        if (angle >= 0)
+            angle = (angle > 180) ? angle - 360 : angle;
+        else
+            angle = (angle < 180) ? angle + 360 : angle;
+
+        return angle;
     }
 }

@@ -30,7 +30,7 @@ public class TexturePlacement : MonoBehaviour {
           uv[i] = Offset + uv[i];
 
           Matrix3x3 rotationMatrix = Matrix3x3Helpers.CreateRotation(Rotation);
-          uv[i] = rotationMatrix * mInitUV[i];
+          uv[i] = rotationMatrix * uv[i];
       }
       theMesh.uv = uv;
     }
