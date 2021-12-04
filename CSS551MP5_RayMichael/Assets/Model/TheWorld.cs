@@ -39,7 +39,6 @@ public partial class TheWorld : MonoBehaviour
 
     private bool FoundSelected(GameObject g)
     {
-        
         return mSelected == g;
     }
 
@@ -85,29 +84,16 @@ public partial class TheWorld : MonoBehaviour
                     v[found + m].transform.localPosition = sweep;
                 }
             }
-            //if manipulation is occuring on the x axis
+            //if manipulation is occuring on the y axis
             if (pos.y != 0)
             {
                 for (int m = 0; m < res[1]; m++)
                 {
-                    /*
-                    //Obtain an angle in radians
-                    double rad = (Math.PI / 180.0) * (rot / res[1]);
-
-                    //Increment angle by 2 * theta at each row of vectors
-                    rad = rad * m;
-                    //Compute the x and z values
-                    float x = (float)(radius * Math.Cos(rad));
-                    float z = (float)(radius * Math.Sin(rad));
-                    Vector3 sweep = new Vector3(x, newPos.y, z);
-                    v[found + m].transform.localPosition = sweep;
-                    */
                     v[found + m].transform.localPosition += pos;
                 }
             }
         }
     }
-
 
     public void SetSelected(GameObject g)
     {
@@ -132,7 +118,6 @@ public partial class TheWorld : MonoBehaviour
             mSelected.GetComponent<Renderer>().material.color = mOrgObjColor;
             mSelected = null;
         }
-            
     }
 
 }

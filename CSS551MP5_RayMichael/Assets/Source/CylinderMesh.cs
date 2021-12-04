@@ -8,20 +8,6 @@ public class CylinderMesh : MyMeshNxM
     private double rotationDegrees = 10.0;
     private float radius = 5.0f;
     
-    /*
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    */
-
     private double ConvertDegreesToRadians(double degrees)
     {
         double rad = (Math.PI / 180.0) * degrees;
@@ -92,9 +78,6 @@ public class CylinderMesh : MyMeshNxM
      //   theMesh.triangles = tris; //  new int[3];
      //   theMesh.normals = norms;
 
-        //Step 8: Initialize the sphere controllers and normal vector line segments
-        //InitControllers(vects);
-        //InitNormals(vects, norms);
 
 
 
@@ -214,28 +197,6 @@ public class CylinderMesh : MyMeshNxM
                 mControllers[i].layer = LayerMask.NameToLayer("Manipulator");
             }
         }
-
-        //Code for renaming black edge spheres for 360; it works however affects the direct manipulation code in TheWorld script. would need to revise
-        /*
-        if (rotationDegrees == 360)
-        {
-            for (int i = 0; i < v.Length; i++)
-            {
-                if (i % M == 0)
-                {
-                    mControllers[i + M - 1].transform.name = "ManSphere";
-                }
-            }
-        }
-        */
-
-
-
-
-
-
-
-
 
     }
 
