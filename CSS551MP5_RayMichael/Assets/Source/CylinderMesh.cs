@@ -88,13 +88,102 @@ public class CylinderMesh : MyMeshNxM
         }
 
         //Step 7: Assign the vertices, triangles, and normal vectors to the mesh
-        theMesh.vertices = verts; //  new Vector3[3];
-        theMesh.triangles = tris; //  new int[3];
-        theMesh.normals = norms;
+     //   theMesh.vertices = verts; //  new Vector3[3];
+     //   theMesh.triangles = tris; //  new int[3];
+     //   theMesh.normals = norms;
 
         //Step 8: Initialize the sphere controllers and normal vector line segments
         //InitControllers(vects);
         //InitNormals(vects, norms);
+
+        //TESTING-------------------------------------------------------------------------------------------------------------------
+        //Use list where index of outer List == vertex v index (v0, v1, v2, etc.),
+        //the inner List will carry all of the indexes of the triangles that touch the vertex v
+        List<List<int>> normsLoc = new List<List<int>>();
+        for (int i = 0; i < N * M; i++)
+        {
+            normsLoc.Add(new List<int>());
+        }
+
+        //Retrieve the total count of triangles again
+    //    int numTriangles = (N - 1) * (M - 1) * 2;
+        //create triangle vector array for storing normal vectors of each triangle
+        Vector3[] tri = new Vector3[numTriangles];
+        //The cur variable will track which triangle we are working on
+        int cur = 0;
+        //Think of this as row-major 1D array to represent 2D array
+        for (int i = 0; i < N - 1; i++)
+        {
+            for (int j = 0; j < M - 1; j++)
+            {
+                //TopLeft refers to the top left of the "square" that is a resultant of two triangles
+                int topLeft = (i + 1) * M + j;
+                //TopRight refers to the top right of the "square" that is a resultant of two triangles
+                int topRight = (i + 1) * M + (j + 1);
+                //BottomLeft refers to the bottom left of the "square" that is a resultant of two triangles
+                int bottomLeft = i * M + j;
+                //BottomRight refers to the bottom right of the "square" that is a resultant of two triangles
+                int bottomRight = i * M + (j + 1);
+                //Add the left triangle starting at the lowest left corner of the mesh first (1/2)
+                tri[cur] = FaceNormal(verts, topLeft, topRight, bottomLeft);
+                //Add the triangle to each vertex to keep track for averaging
+                normsLoc[topLeft].Add(cur);
+                normsLoc[topRight].Add(cur);
+                normsLoc[bottomLeft].Add(cur);
+                //increment to the next triangle
+                cur = cur + 1;
+                //Add the right triangle starting at the lowest left corner of the mesh first (2/2)
+                tri[cur] = FaceNormal(verts, bottomLeft, topRight, bottomRight);
+                //Add the triangle to each vertex to keep track for averaging
+                normsLoc[bottomLeft].Add(cur);
+                normsLoc[topRight].Add(cur);
+                normsLoc[bottomRight].Add(cur);
+                //increment to the next triangle
+                cur = cur + 1;
+            }
+        }
+
+        //Computation for solving the averaging of the triangles at each vertex/normal
+        for (int i = 0; i < norms.Length; i++)
+        {
+            Vector3 sumTris = new Vector3();
+            for (int j = 0; j < normsLoc[i].Count; j++)
+            {
+                int index = normsLoc[i][j];
+                if (j == 0)
+                {
+                    sumTris = tri[index];
+                }
+                else
+                {
+                    sumTris = sumTris + tri[index];
+                }
+            }
+            if ((rotationDegrees == 360) && (i % M == 0))
+            {
+
+                for (int j = 0; j < normsLoc[i + M - 1].Count; j++)
+                {
+                    int index = normsLoc[i + M - 1][j];
+                    if (j == 0)
+                    {
+                        sumTris = tri[index];
+                    }
+                    else
+                    {
+                        sumTris = sumTris + tri[index];
+                    }
+                }
+            }
+            norms[i] = sumTris.normalized;
+        }
+
+
+        //Step 7: Assign the vertices, triangles, and normal vectors to the mesh
+        theMesh.vertices = verts; //  new Vector3[3];
+        theMesh.triangles = tris; //  new int[3];
+        theMesh.normals = norms;
+
     }
 
     //Updated the color of the manipulation spheres; only the edge spheres are to be white and manipulatable
@@ -116,7 +205,6 @@ public class CylinderMesh : MyMeshNxM
             else if (i % M == 0)
             {
                 mControllers[i].transform.name = "ManSphere";
-                
             }
         }
 
@@ -133,6 +221,15 @@ public class CylinderMesh : MyMeshNxM
             }
         }
         */
+
+
+
+
+
+
+
+
+
     }
 
     //no need to override if applying a mesh object with CylinderMesh script just fyi
