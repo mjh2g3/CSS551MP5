@@ -79,6 +79,8 @@ public class CylinderMesh : MyMeshNxM
      //   theMesh.normals = norms;
 
 
+
+
         //TESTING-------------------------------------------------------------------------------------------------------------------
         //Use list where index of outer List == vertex v index (v0, v1, v2, etc.),
         //the inner List will carry all of the indexes of the triangles that touch the vertex v
@@ -167,6 +169,9 @@ public class CylinderMesh : MyMeshNxM
         theMesh.triangles = tris; //  new int[3];
         theMesh.normals = norms;
 
+
+        // ComputeNormals(verts, norms);
+
     }
 
     //Updated the color of the manipulation spheres; only the edge spheres are to be white and manipulatable
@@ -188,6 +193,8 @@ public class CylinderMesh : MyMeshNxM
             else if (i % M == 0)
             {
                 mControllers[i].transform.name = "ManSphere";
+
+                mControllers[i].layer = LayerMask.NameToLayer("Manipulator");
             }
         }
 
