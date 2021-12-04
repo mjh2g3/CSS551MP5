@@ -7,6 +7,7 @@ public class TexturePlacement : MonoBehaviour {
     public int meshType = 0;
     public Vector2 Offset = Vector2.zero;
     public Vector2 Scale = Vector2.one;
+    public float Rotation = 0;
     Vector2[] mInitUV = null; // initial values
 
     public void SaveInitUV(Vector2[] uv)
@@ -27,6 +28,9 @@ public class TexturePlacement : MonoBehaviour {
                 uv[i].x = mInitUV[i].x * Scale.x;
                 uv[i].y = mInitUV[i].y * Scale.y;
                 uv[i] = Offset + uv[i];
+
+                Matrix3x3 rotationMatrix = Matrix3x3Helpers.CreateRotation(Rotation);
+                uv[i] = rotationMatrix * mInitUV[i];
             }
             theMesh.uv = uv;
         }

@@ -110,7 +110,7 @@ public class XfromControl : MonoBehaviour {
         }
         else
         {
-            p = Vector3.zero;
+            p = new Vector3(0, 0, texture.Rotation);
         }
         return p;
     }
@@ -126,7 +126,7 @@ public class XfromControl : MonoBehaviour {
             texture.Scale = p;
         } else
         {
-            
+            texture.Rotation = p.z;
         }
     }
 }
