@@ -6,7 +6,9 @@ public class TexturePlacement : MonoBehaviour {
 
     public Vector2 Offset = Vector2.zero;
     public Vector2 Scale = Vector2.one;
+
     public float Rotation = 0;
+  
     Vector2[] mInitUV = null; // initial values
 
     public void SaveInitUV(Vector2[] uv)
