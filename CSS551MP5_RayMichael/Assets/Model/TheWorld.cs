@@ -90,6 +90,7 @@ public partial class TheWorld : MonoBehaviour
             {
                 for (int m = 0; m < res[1]; m++)
                 {
+                    /*
                     //Obtain an angle in radians
                     double rad = (Math.PI / 180.0) * (rot / res[1]);
 
@@ -100,6 +101,8 @@ public partial class TheWorld : MonoBehaviour
                     float z = (float)(radius * Math.Sin(rad));
                     Vector3 sweep = new Vector3(x, newPos.y, z);
                     v[found + m].transform.localPosition = sweep;
+                    */
+                    v[found + m].transform.localPosition += pos;
                 }
             }
         }
