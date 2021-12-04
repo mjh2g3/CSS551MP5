@@ -14,6 +14,7 @@ public partial class MyMeshNxM : MonoBehaviour {
         {
             mControllers[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             mControllers[i].transform.name = "ManSphere";
+            mControllers[i].layer = LayerMask.NameToLayer("Manipulator");
             mControllers[i].transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
             mControllers[i].transform.localPosition = v[i];
